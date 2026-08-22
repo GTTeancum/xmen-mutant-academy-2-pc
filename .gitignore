@@ -13,3 +13,6 @@ tools/esrgan/
 # Python bytecode
 __pycache__/
 *.pyc
+
+# Personal notes, kept beside the work but not published.
+RECOMP-PLAYBOOK.md
