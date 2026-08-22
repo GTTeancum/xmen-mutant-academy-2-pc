@@ -1,0 +1,356 @@
+{
+  "game": {
+    "id": "SLUS-01382",
+    "name": "XMenMutantAcademy2",
+    "output": "../generated"
+  },
+  "cue": "../../X-Men - Mutant Academy 2 (USA).cue",
+  "funcMap": "funcmaps/main.json",
+  "overlays": [
+    {
+      "name": "BEA_rel1",
+      "file": "DATA/REL_CODE/ONE/BEA_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/BEA_rel1.json"
+    },
+    {
+      "name": "BEA_rel2",
+      "file": "DATA/REL_CODE/TWO/BEA_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/BEA_rel2.json"
+    },
+    {
+      "name": "CYC_rel1",
+      "file": "DATA/REL_CODE/ONE/CYC_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/CYC_rel1.json"
+    },
+    {
+      "name": "CYC_rel2",
+      "file": "DATA/REL_CODE/TWO/CYC_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/CYC_rel2.json"
+    },
+    {
+      "name": "FOR_rel1",
+      "file": "DATA/REL_CODE/ONE/FOR_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/FOR_rel1.json"
+    },
+    {
+      "name": "FOR_rel2",
+      "file": "DATA/REL_CODE/TWO/FOR_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/FOR_rel2.json"
+    },
+    {
+      "name": "GAM_rel1",
+      "file": "DATA/REL_CODE/ONE/GAM_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/GAM_rel1.json"
+    },
+    {
+      "name": "GAM_rel2",
+      "file": "DATA/REL_CODE/TWO/GAM_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/GAM_rel2.json"
+    },
+    {
+      "name": "HAV_rel1",
+      "file": "DATA/REL_CODE/ONE/HAV_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/HAV_rel1.json"
+    },
+    {
+      "name": "HAV_rel2",
+      "file": "DATA/REL_CODE/TWO/HAV_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/HAV_rel2.json"
+    },
+    {
+      "name": "JUG_rel1",
+      "file": "DATA/REL_CODE/ONE/JUG_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/JUG_rel1.json"
+    },
+    {
+      "name": "JUG_rel2",
+      "file": "DATA/REL_CODE/TWO/JUG_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/JUG_rel2.json"
+    },
+    {
+      "name": "MAG_rel1",
+      "file": "DATA/REL_CODE/ONE/MAG_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/MAG_rel1.json"
+    },
+    {
+      "name": "MAG_rel2",
+      "file": "DATA/REL_CODE/TWO/MAG_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/MAG_rel2.json"
+    },
+    {
+      "name": "MYS_rel1",
+      "file": "DATA/REL_CODE/ONE/MYS_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/MYS_rel1.json"
+    },
+    {
+      "name": "MYS_rel2",
+      "file": "DATA/REL_CODE/TWO/MYS_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/MYS_rel2.json"
+    },
+    {
+      "name": "NIG_rel1",
+      "file": "DATA/REL_CODE/ONE/NIG_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/NIG_rel1.json"
+    },
+    {
+      "name": "NIG_rel2",
+      "file": "DATA/REL_CODE/TWO/NIG_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/NIG_rel2.json"
+    },
+    {
+      "name": "PHO_rel1",
+      "file": "DATA/REL_CODE/ONE/PHO_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/PHO_rel1.json"
+    },
+    {
+      "name": "PHO_rel2",
+      "file": "DATA/REL_CODE/TWO/PHO_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/PHO_rel2.json"
+    },
+    {
+      "name": "PSY_rel1",
+      "file": "DATA/REL_CODE/ONE/PSY_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/PSY_rel1.json"
+    },
+    {
+      "name": "PSY_rel2",
+      "file": "DATA/REL_CODE/TWO/PSY_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/PSY_rel2.json"
+    },
+    {
+      "name": "ROG_rel1",
+      "file": "DATA/REL_CODE/ONE/ROG_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/ROG_rel1.json"
+    },
+    {
+      "name": "ROG_rel2",
+      "file": "DATA/REL_CODE/TWO/ROG_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/ROG_rel2.json"
+    },
+    {
+      "name": "SAB_rel1",
+      "file": "DATA/REL_CODE/ONE/SAB_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/SAB_rel1.json"
+    },
+    {
+      "name": "SAB_rel2",
+      "file": "DATA/REL_CODE/TWO/SAB_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/SAB_rel2.json"
+    },
+    {
+      "name": "SPI_rel1",
+      "file": "DATA/REL_CODE/ONE/SPI_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/SPI_rel1.json"
+    },
+    {
+      "name": "SPI_rel2",
+      "file": "DATA/REL_CODE/TWO/SPI_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/SPI_rel2.json"
+    },
+    {
+      "name": "STO_rel1",
+      "file": "DATA/REL_CODE/ONE/STO_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/STO_rel1.json"
+    },
+    {
+      "name": "STO_rel2",
+      "file": "DATA/REL_CODE/TWO/STO_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/STO_rel2.json"
+    },
+    {
+      "name": "TOA_rel1",
+      "file": "DATA/REL_CODE/ONE/TOA_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/TOA_rel1.json"
+    },
+    {
+      "name": "TOA_rel2",
+      "file": "DATA/REL_CODE/TWO/TOA_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/TOA_rel2.json"
+    },
+    {
+      "name": "WOL_rel1",
+      "file": "DATA/REL_CODE/ONE/WOL_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/WOL_rel1.json"
+    },
+    {
+      "name": "WOL_rel2",
+      "file": "DATA/REL_CODE/TWO/WOL_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/WOL_rel2.json"
+    },
+    {
+      "name": "XAV_rel1",
+      "file": "DATA/REL_CODE/ONE/XAV_REL1.R",
+      "base": "0x80107EF0",
+      "funcMap": "funcmaps/XAV_rel1.json"
+    },
+    {
+      "name": "XAV_rel2",
+      "file": "DATA/REL_CODE/TWO/XAV_REL2.R",
+      "base": "0x80110EF0",
+      "funcMap": "funcmaps/XAV_rel2.json"
+    },
+    {
+      "name": "front",
+      "file": "DATA/FRONT.BIN",
+      "base": "0x801C9000",
+      "funcMap": "funcmaps/front.json"
+    },
+    {
+      "name": "practice",
+      "file": "DATA/PRACTICE.BIN",
+      "base": "0x801EF000",
+      "funcMap": "funcmaps/practice.json"
+    }
+  ],
+  "patches": [
+    {
+      "overlay": "*",
+      "function": "PadInitMtap",
+      "mode": "replace",
+      "target": "Recompiled.PadPatches.PadInitMtap"
+    },
+    {
+      "overlay": "*",
+      "function": "ClearImage",
+      "mode": "replace",
+      "target": "RecompOne.Runtime.Sdk.LibGpu.ClearImage"
+    },
+    {
+      "overlay": "*",
+      "function": "LoadImage",
+      "mode": "replace",
+      "target": "RecompOne.Runtime.Sdk.LibGpu.LoadImage"
+    },
+    {
+      "overlay": "*",
+      "function": "MoveImage",
+      "mode": "replace",
+      "target": "RecompOne.Runtime.Sdk.LibGpu.MoveImage"
+    },
+    {
+      "overlay": "*",
+      "function": "ResetGraph",
+      "mode": "replace",
+      "target": "Recompiled.GpuPatches.ResetGraph"
+    },
+    {
+      "overlay": "*",
+      "function": "SetDispMask",
+      "mode": "replace",
+      "target": "Recompiled.GpuPatches.SetDispMask"
+    },
+    {
+      "overlay": "*",
+      "function": "DrawPrim",
+      "mode": "replace",
+      "target": "Recompiled.GpuPatches.DrawPrim"
+    },
+    {
+      "overlay": "*",
+      "function": "DrawOTagEnv",
+      "mode": "replace",
+      "target": "Recompiled.GpuPatches.DrawOTagEnv"
+    },
+    {
+      "overlay": "*",
+      "function": "ClearOTagR",
+      "mode": "replace",
+      "target": "Recompiled.GpuPatches.ClearOTagR"
+    },
+    {
+      "overlay": "*",
+      "function": "DrawSyncCallback",
+      "mode": "replace",
+      "target": "Recompiled.GpuPatches.DrawSyncCallback"
+    },
+    {
+      "overlay": "*",
+      "function": "GetODE",
+      "mode": "replace",
+      "target": "Recompiled.GpuPatches.GetODE"
+    },
+    {
+      "overlay": "*",
+      "function": "SetGraphDebug",
+      "mode": "replace",
+      "target": "Recompiled.GpuPatches.SetGraphDebug"
+    },
+    {
+      "overlay": "front",
+      "address": "0x801CC764",
+      "mode": "pre",
+      "target": "Recompiled.Trace.PlayMovieEnter"
+    },
+    {
+      "overlay": "front",
+      "address": "0x801CC764",
+      "mode": "post",
+      "target": "Recompiled.Trace.PlayMovieExit"
+    },
+    {
+      "overlay": "main",
+      "address": "0x80090A04",
+      "mode": "pre",
+      "target": "Recompiled.Trace.ClrCardEvent"
+    },
+    {
+      "overlay": "main",
+      "address": "0x80090BE4",
+      "mode": "pre",
+      "target": "Recompiled.Trace.GetCardEventX"
+    },
+    {
+      "overlay": "main",
+      "address": "0x80090BE4",
+      "mode": "post",
+      "target": "Recompiled.Trace.GetCardEventXExit"
+    },
+    {
+      "overlay": "main",
+      "address": "0x8008FCA0",
+      "mode": "pre",
+      "target": "Recompiled.Trace.MemCardOp"
+    },
+    {
+      "overlay": "main",
+      "address": "0x8008FCA0",
+      "mode": "post",
+      "target": "Recompiled.Trace.MemCardOpExit"
+    }
+  ],
+  "callRing": true
+}

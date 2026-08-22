@@ -1,0 +1,54 @@
+{
+ "functions": [
+  {
+   "address": "0x80088940",
+   "name": "StCdInterruptWrapper",
+   "size": 4
+  },
+  {
+   "address": "0x8008B214",
+   "name": "CdSetDebug",
+   "size": 4
+  },
+  {
+   "address": "0x8008B674",
+   "name": "CdMix",
+   "size": 4
+  },
+  {
+   "address": "0x8008B694",
+   "name": "CdGetSector",
+   "size": 4
+  },
+  {
+   "address": "0x8008BF04",
+   "name": "CdLastPos",
+   "size": 4
+  },
+  {
+   "address": "0x8008BF14",
+   "name": "CdFlush",
+   "size": 4
+  },
+  {
+   "address": "0x8008BF34",
+   "name": "CdGetSector2",
+   "size": 4
+  },
+  {
+   "address": "0x8008BF54",
+   "name": "CdDataSync",
+   "size": 4
+  },
+  {
+   "address": "0x8008CC68",
+   "name": "SetVideoMode",
+   "size": 4
+  },
+  {
+   "address": "0x8008CC7C",
+   "name": "GetVideoMode",
+   "size": 4
+  }
+ ]
+}

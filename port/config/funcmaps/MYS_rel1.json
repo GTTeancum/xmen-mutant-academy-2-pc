@@ -1,0 +1,184 @@
+{
+ "functions": [
+  {
+   "address": "0x80107EF0",
+   "name": "ptr_80107EF0",
+   "size": 104
+  },
+  {
+   "address": "0x80107F58",
+   "name": "ptr_80107F58",
+   "size": 8
+  },
+  {
+   "address": "0x80107F60",
+   "name": "ptr_80107F60",
+   "size": 40
+  },
+  {
+   "address": "0x80107F88",
+   "name": "ptr_80107F88",
+   "size": 344
+  },
+  {
+   "address": "0x801080E0",
+   "name": "ptr_801080E0",
+   "size": 152
+  },
+  {
+   "address": "0x80108178",
+   "name": "ptr_80108178",
+   "size": 372
+  },
+  {
+   "address": "0x801082EC",
+   "name": "ptr_801082EC",
+   "size": 348
+  },
+  {
+   "address": "0x80108448",
+   "name": "func_80108448",
+   "size": 228
+  },
+  {
+   "address": "0x8010852C",
+   "name": "ptr_8010852C",
+   "size": 40
+  },
+  {
+   "address": "0x80108554",
+   "name": "func_80108554",
+   "size": 196
+  },
+  {
+   "address": "0x80108618",
+   "name": "func_80108618",
+   "size": 1228
+  },
+  {
+   "address": "0x80108AE4",
+   "name": "func_80108AE4",
+   "size": 316
+  },
+  {
+   "address": "0x80108C20",
+   "name": "ptr_80108C20",
+   "size": 152
+  },
+  {
+   "address": "0x80108CB8",
+   "name": "func_80108CB8",
+   "size": 1536
+  },
+  {
+   "address": "0x80108E4C",
+   "name": "call_80108E4C",
+   "size": 1132
+  },
+  {
+   "address": "0x80108E94",
+   "name": "call_80108E94",
+   "size": 1060
+  },
+  {
+   "address": "0x80108F04",
+   "name": "call_80108F04",
+   "size": 948
+  },
+  {
+   "address": "0x80108F4C",
+   "name": "call_80108F4C",
+   "size": 876
+  },
+  {
+   "address": "0x80108F94",
+   "name": "call_80108F94",
+   "size": 804
+  },
+  {
+   "address": "0x80108FDC",
+   "name": "call_80108FDC",
+   "size": 732
+  },
+  {
+   "address": "0x80109050",
+   "name": "call_80109050",
+   "size": 616
+  },
+  {
+   "address": "0x801092B8",
+   "name": "func_801092B8",
+   "size": 264
+  },
+  {
+   "address": "0x801093C0",
+   "name": "ptr_801093C0",
+   "size": 80
+  },
+  {
+   "address": "0x80109410",
+   "name": "func_80109410",
+   "size": 452
+  },
+  {
+   "address": "0x801095D4",
+   "name": "ptr_801095D4",
+   "size": 416
+  },
+  {
+   "address": "0x80109774",
+   "name": "func_80109774",
+   "size": 104
+  },
+  {
+   "address": "0x801097DC",
+   "name": "func_801097DC",
+   "size": 956
+  },
+  {
+   "address": "0x80109B98",
+   "name": "func_80109B98",
+   "size": 1804
+  },
+  {
+   "address": "0x80109C0C",
+   "name": "call_80109C0C",
+   "size": 1688
+  },
+  {
+   "address": "0x80109ECC",
+   "name": "call_80109ECC",
+   "size": 984
+  },
+  {
+   "address": "0x80109FBC",
+   "name": "call_80109FBC",
+   "size": 744
+  },
+  {
+   "address": "0x8010A0AC",
+   "name": "call_8010A0AC",
+   "size": 504
+  },
+  {
+   "address": "0x8010A19C",
+   "name": "call_8010A19C",
+   "size": 264
+  },
+  {
+   "address": "0x8010A290",
+   "name": "call_8010A290",
+   "size": 20
+  },
+  {
+   "address": "0x8010A2A4",
+   "name": "ptr_8010A2A4",
+   "size": 6028
+  },
+  {
+   "address": "0x8010BA30",
+   "name": "ptr_8010BA30",
+   "size": 956
+  }
+ ]
+}

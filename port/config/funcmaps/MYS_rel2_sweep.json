@@ -1,0 +1,115 @@
+{
+  "functions": [
+    {
+      "address": "0x80110EF0",
+      "name": "func_80110EF0",
+      "size": 104
+    },
+    {
+      "address": "0x80110F58",
+      "name": "func_80110F58",
+      "size": 8
+    },
+    {
+      "address": "0x80110F60",
+      "name": "func_80110F60",
+      "size": 40
+    },
+    {
+      "address": "0x80110F88",
+      "name": "func_80110F88",
+      "size": 344
+    },
+    {
+      "address": "0x801110E0",
+      "name": "func_801110E0",
+      "size": 152
+    },
+    {
+      "address": "0x80111178",
+      "name": "func_80111178",
+      "size": 372
+    },
+    {
+      "address": "0x801112EC",
+      "name": "func_801112EC",
+      "size": 348
+    },
+    {
+      "address": "0x80111448",
+      "name": "func_80111448",
+      "size": 228
+    },
+    {
+      "address": "0x8011152C",
+      "name": "func_8011152C",
+      "size": 40
+    },
+    {
+      "address": "0x80111554",
+      "name": "func_80111554",
+      "size": 196
+    },
+    {
+      "address": "0x80111618",
+      "name": "func_80111618",
+      "size": 1228
+    },
+    {
+      "address": "0x80111AE4",
+      "name": "func_80111AE4",
+      "size": 316
+    },
+    {
+      "address": "0x80111C20",
+      "name": "func_80111C20",
+      "size": 152
+    },
+    {
+      "address": "0x80111CB8",
+      "name": "func_80111CB8",
+      "size": 1536
+    },
+    {
+      "address": "0x801122B8",
+      "name": "func_801122B8",
+      "size": 264
+    },
+    {
+      "address": "0x801123C0",
+      "name": "func_801123C0",
+      "size": 80
+    },
+    {
+      "address": "0x80112410",
+      "name": "func_80112410",
+      "size": 452
+    },
+    {
+      "address": "0x801125D4",
+      "name": "func_801125D4",
+      "size": 416
+    },
+    {
+      "address": "0x80112774",
+      "name": "func_80112774",
+      "size": 104
+    },
+    {
+      "address": "0x801127DC",
+      "name": "func_801127DC",
+      "size": 956
+    },
+    {
+      "address": "0x80112B98",
+      "name": "func_80112B98",
+      "size": 1804
+    },
+    {
+      "address": "0x801132A4",
+      "name": "func_801132A4",
+      "size": 6028
+    }
+  ],
+  "labels": []
+}

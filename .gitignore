@@ -1,0 +1,15 @@
+# The game disc. Not redistributable.
+*.bin
+*.cue
+
+# Third-party tools, vendored locally but not ours to redistribute.
+tools/RecompOne/
+tools/RecompOne.wiki/
+tools/esrgan/
+
+# Scratch
+*.log
+
+# Python bytecode
+__pycache__/
+*.pyc

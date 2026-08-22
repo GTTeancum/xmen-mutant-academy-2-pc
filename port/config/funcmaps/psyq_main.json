@@ -1,0 +1,1294 @@
+{
+ "functions": [
+  {
+   "address": "0x80081150",
+   "name": "InitHeap",
+   "size": 16
+  },
+  {
+   "address": "0x80081160",
+   "name": "FlushCache",
+   "size": 16
+  },
+  {
+   "address": "0x80081170",
+   "name": "OpenEvent",
+   "size": 16
+  },
+  {
+   "address": "0x80081180",
+   "name": "EnableEvent",
+   "size": 16
+  },
+  {
+   "address": "0x80081190",
+   "name": "EnterCriticalSection",
+   "size": 16
+  },
+  {
+   "address": "0x800811A0",
+   "name": "ExitCriticalSection",
+   "size": 16
+  },
+  {
+   "address": "0x800811B0",
+   "name": "SetRCnt",
+   "size": 156
+  },
+  {
+   "address": "0x8008124C",
+   "name": "GetRCnt",
+   "size": 56
+  },
+  {
+   "address": "0x80081284",
+   "name": "StartRCnt",
+   "size": 48
+  },
+  {
+   "address": "0x800812B4",
+   "name": "ResetRCnt",
+   "size": 56
+  },
+  {
+   "address": "0x800812EC",
+   "name": "memcpy",
+   "size": 64
+  },
+  {
+   "address": "0x8008132C",
+   "name": "memset",
+   "size": 48
+  },
+  {
+   "address": "0x8008135C",
+   "name": "rand",
+   "size": 48
+  },
+  {
+   "address": "0x8008138C",
+   "name": "strcat",
+   "size": 176
+  },
+  {
+   "address": "0x8008147C",
+   "name": "strcmp",
+   "size": 112
+  },
+  {
+   "address": "0x800814EC",
+   "name": "strcpy",
+   "size": 80
+  },
+  {
+   "address": "0x8008153C",
+   "name": "index",
+   "size": 56
+  },
+  {
+   "address": "0x80081574",
+   "name": "strlen",
+   "size": 64
+  },
+  {
+   "address": "0x800815B4",
+   "name": "strncmp",
+   "size": 128
+  },
+  {
+   "address": "0x80081634",
+   "name": "sprintf",
+   "size": 2176
+  },
+  {
+   "address": "0x80081EB4",
+   "name": "memchr",
+   "size": 80
+  },
+  {
+   "address": "0x80081F04",
+   "name": "memmove",
+   "size": 112
+  },
+  {
+   "address": "0x80081F74",
+   "name": "exit",
+   "size": 16
+  },
+  {
+   "address": "0x80081F84",
+   "name": "rsin",
+   "size": 60
+  },
+  {
+   "address": "0x80081FC0",
+   "name": "sin_1",
+   "size": 148
+  },
+  {
+   "address": "0x80082054",
+   "name": "rcos",
+   "size": 160
+  },
+  {
+   "address": "0x800820FC",
+   "name": "InitGeom",
+   "size": 136
+  },
+  {
+   "address": "0x80082184",
+   "name": "SquareRoot0",
+   "size": 144
+  },
+  {
+   "address": "0x80082214",
+   "name": "VectorNormalS",
+   "size": 20
+  },
+  {
+   "address": "0x80082228",
+   "name": "VectorNormal",
+   "size": 48
+  },
+  {
+   "address": "0x80082258",
+   "name": "VectorNormalSS",
+   "size": 240
+  },
+  {
+   "address": "0x80082348",
+   "name": "CompMatrix",
+   "size": 352
+  },
+  {
+   "address": "0x800824A8",
+   "name": "ApplyMatrixLV",
+   "size": 352
+  },
+  {
+   "address": "0x80082608",
+   "name": "ApplyRotMatrix",
+   "size": 48
+  },
+  {
+   "address": "0x80082638",
+   "name": "ApplyMatrix",
+   "size": 80
+  },
+  {
+   "address": "0x80082688",
+   "name": "TransMatrix",
+   "size": 48
+  },
+  {
+   "address": "0x800826B8",
+   "name": "ScaleMatrix",
+   "size": 320
+  },
+  {
+   "address": "0x800827F8",
+   "name": "SetRotMatrix",
+   "size": 48
+  },
+  {
+   "address": "0x80082828",
+   "name": "SetColorMatrix",
+   "size": 48
+  },
+  {
+   "address": "0x80082858",
+   "name": "SetTransMatrix",
+   "size": 32
+  },
+  {
+   "address": "0x80082878",
+   "name": "SetBackColor",
+   "size": 32
+  },
+  {
+   "address": "0x80082898",
+   "name": "SetGeomOffset",
+   "size": 32
+  },
+  {
+   "address": "0x800828B8",
+   "name": "SetGeomScreen",
+   "size": 16
+  },
+  {
+   "address": "0x800828C8",
+   "name": "RotTransPers",
+   "size": 48
+  },
+  {
+   "address": "0x800828F8",
+   "name": "RotAverage4",
+   "size": 128
+  },
+  {
+   "address": "0x80082964",
+   "name": "AverageSZ4",
+   "size": 16
+  },
+  {
+   "address": "0x80082968",
+   "name": "ReadOTZ",
+   "size": 16
+  },
+  {
+   "address": "0x80082978",
+   "name": "RotMatrix",
+   "size": 656
+  },
+  {
+   "address": "0x80082C08",
+   "name": "RotMatrixYXZ",
+   "size": 656
+  },
+  {
+   "address": "0x80082E98",
+   "name": "RotMatrixY",
+   "size": 416
+  },
+  {
+   "address": "0x80083248",
+   "name": "ratan2",
+   "size": 384
+  },
+  {
+   "address": "0x800833C8",
+   "name": "_patch_gte",
+   "size": 224
+  },
+  {
+   "address": "0x800834A8",
+   "name": "FntPrint",
+   "size": 968
+  },
+  {
+   "address": "0x80083870",
+   "name": "ResetGraph",
+   "size": 372
+  },
+  {
+   "address": "0x800839E4",
+   "name": "SetGraphDebug",
+   "size": 92
+  },
+  {
+   "address": "0x80083A40",
+   "name": "GetGraphDebug",
+   "size": 16
+  },
+  {
+   "address": "0x80083A50",
+   "name": "DrawSyncCallback",
+   "size": 96
+  },
+  {
+   "address": "0x80083AB0",
+   "name": "SetDispMask",
+   "size": 152
+  },
+  {
+   "address": "0x80083B48",
+   "name": "DrawSync",
+   "size": 388
+  },
+  {
+   "address": "0x80083CCC",
+   "name": "ClearImage",
+   "size": 144
+  },
+  {
+   "address": "0x80083D5C",
+   "name": "LoadImage",
+   "size": 96
+  },
+  {
+   "address": "0x80083DBC",
+   "name": "MoveImage",
+   "size": 184
+  },
+  {
+   "address": "0x80083E74",
+   "name": "ClearOTagR",
+   "size": 172
+  },
+  {
+   "address": "0x80083F20",
+   "name": "DrawPrim",
+   "size": 92
+  },
+  {
+   "address": "0x80083F7C",
+   "name": "DrawOTag",
+   "size": 112
+  },
+  {
+   "address": "0x80083FEC",
+   "name": "PutDrawEnv",
+   "size": 192
+  },
+  {
+   "address": "0x800840AC",
+   "name": "DrawOTagEnv",
+   "size": 216
+  },
+  {
+   "address": "0x80084184",
+   "name": "PutDispEnv",
+   "size": 1272
+  },
+  {
+   "address": "0x8008467C",
+   "name": "GetODE",
+   "size": 48
+  },
+  {
+   "address": "0x800846AC",
+   "name": "SetDrawArea",
+   "size": 128
+  },
+  {
+   "address": "0x8008472C",
+   "name": "SetDrawOffset",
+   "size": 64
+  },
+  {
+   "address": "0x8008476C",
+   "name": "SetDrawEnv",
+   "size": 6352
+  },
+  {
+   "address": "0x8008603C",
+   "name": "_GPU_ResetCallback",
+   "size": 80
+  },
+  {
+   "address": "0x8008608C",
+   "name": "GPU_cw",
+   "size": 16
+  },
+  {
+   "address": "0x8008609C",
+   "name": "SetDefDrawEnv",
+   "size": 192
+  },
+  {
+   "address": "0x8008615C",
+   "name": "SetDefDispEnv",
+   "size": 64
+  },
+  {
+   "address": "0x8008619C",
+   "name": "GetTPage",
+   "size": 64
+  },
+  {
+   "address": "0x800861DC",
+   "name": "GetClut",
+   "size": 32
+  },
+  {
+   "address": "0x800861FC",
+   "name": "AddPrim",
+   "size": 64
+  },
+  {
+   "address": "0x8008623C",
+   "name": "SetSemiTrans",
+   "size": 48
+  },
+  {
+   "address": "0x8008626C",
+   "name": "SetShadeTex",
+   "size": 48
+  },
+  {
+   "address": "0x8008629C",
+   "name": "SetPolyF3",
+   "size": 32
+  },
+  {
+   "address": "0x800862BC",
+   "name": "SetPolyF4",
+   "size": 32
+  },
+  {
+   "address": "0x800862DC",
+   "name": "SetPolyG4",
+   "size": 32
+  },
+  {
+   "address": "0x800862FC",
+   "name": "SetSprt",
+   "size": 32
+  },
+  {
+   "address": "0x8008631C",
+   "name": "SetDrawTPage",
+   "size": 48
+  },
+  {
+   "address": "0x8008634C",
+   "name": "SetDrawMode",
+   "size": 160
+  },
+  {
+   "address": "0x800863EC",
+   "name": "OpenTMD",
+   "size": 64
+  },
+  {
+   "address": "0x8008642C",
+   "name": "ReadTMD",
+   "size": 5824
+  },
+  {
+   "address": "0x80087AEC",
+   "name": "StSetRing",
+   "size": 48
+  },
+  {
+   "address": "0x80087B1C",
+   "name": "CdGetToc",
+   "size": 36
+  },
+  {
+   "address": "0x80087B40",
+   "name": "CdGetToc2",
+   "size": 556
+  },
+  {
+   "address": "0x80087D6C",
+   "name": "CdInit",
+   "size": 336
+  },
+  {
+   "address": "0x80087EBC",
+   "name": "DeliverEvent",
+   "size": 16
+  },
+  {
+   "address": "0x80087F4C",
+   "name": "CdSearchFile",
+   "size": 2416
+  },
+  {
+   "address": "0x800888BC",
+   "name": "CdRead2",
+   "size": 176
+  },
+  {
+   "address": "0x8008896C",
+   "name": "StClearRing",
+   "size": 96
+  },
+  {
+   "address": "0x800889CC",
+   "name": "StUnSetRing",
+   "size": 128
+  },
+  {
+   "address": "0x80088A4C",
+   "name": "data_ready_callback",
+   "size": 140
+  },
+  {
+   "address": "0x80088AD8",
+   "name": "StSetStream",
+   "size": 144
+  },
+  {
+   "address": "0x80088B68",
+   "name": "StFreeRing",
+   "size": 176
+  },
+  {
+   "address": "0x80088C18",
+   "name": "init_ring_status",
+   "size": 64
+  },
+  {
+   "address": "0x80088C58",
+   "name": "StGetNext",
+   "size": 192
+  },
+  {
+   "address": "0x80088D18",
+   "name": "StSetMask",
+   "size": 32
+  },
+  {
+   "address": "0x80088D38",
+   "name": "StCdInterrupt",
+   "size": 2800
+  },
+  {
+   "address": "0x80089D8C",
+   "name": "CD_sync",
+   "size": 640
+  },
+  {
+   "address": "0x8008A00C",
+   "name": "CD_ready",
+   "size": 712
+  },
+  {
+   "address": "0x8008A2D4",
+   "name": "CD_cw",
+   "size": 1036
+  },
+  {
+   "address": "0x8008A6E0",
+   "name": "CD_vol",
+   "size": 136
+  },
+  {
+   "address": "0x8008A768",
+   "name": "CD_flush",
+   "size": 212
+  },
+  {
+   "address": "0x8008A83C",
+   "name": "CD_initvol",
+   "size": 240
+  },
+  {
+   "address": "0x8008A92C",
+   "name": "CD_init",
+   "size": 480
+  },
+  {
+   "address": "0x8008AB0C",
+   "name": "CD_datasync",
+   "size": 360
+  },
+  {
+   "address": "0x8008AD5C",
+   "name": "puts",
+   "size": 96
+  },
+  {
+   "address": "0x8008ADBC",
+   "name": "_putchar",
+   "size": 252
+  },
+  {
+   "address": "0x8008AEB8",
+   "name": "_putchar_flash",
+   "size": 60
+  },
+  {
+   "address": "0x8008AEF4",
+   "name": "write",
+   "size": 16
+  },
+  {
+   "address": "0x8008AF04",
+   "name": "CD_getsector",
+   "size": 256
+  },
+  {
+   "address": "0x8008B004",
+   "name": "CD_getsector2",
+   "size": 240
+  },
+  {
+   "address": "0x8008B0F4",
+   "name": "CdIntToPos",
+   "size": 272
+  },
+  {
+   "address": "0x8008B234",
+   "name": "CdSync",
+   "size": 32
+  },
+  {
+   "address": "0x8008B254",
+   "name": "CdReady",
+   "size": 32
+  },
+  {
+   "address": "0x8008B274",
+   "name": "CdSyncCallback",
+   "size": 32
+  },
+  {
+   "address": "0x8008B294",
+   "name": "CdReadyCallback",
+   "size": 32
+  },
+  {
+   "address": "0x8008B2B4",
+   "name": "CdControl",
+   "size": 316
+  },
+  {
+   "address": "0x8008B3F0",
+   "name": "CdControlF",
+   "size": 308
+  },
+  {
+   "address": "0x8008B524",
+   "name": "CdControlB",
+   "size": 336
+  },
+  {
+   "address": "0x8008B6B4",
+   "name": "CdDataCallback",
+   "size": 48
+  },
+  {
+   "address": "0x8008BC44",
+   "name": "CdRead",
+   "size": 412
+  },
+  {
+   "address": "0x8008BDE0",
+   "name": "CdReadSync",
+   "size": 260
+  },
+  {
+   "address": "0x8008BEE4",
+   "name": "CdStatus",
+   "size": 16
+  },
+  {
+   "address": "0x8008BF14",
+   "name": "CdFlush",
+   "size": 32
+  },
+  {
+   "address": "0x8008BF74",
+   "name": "VSync",
+   "size": 528
+  },
+  {
+   "address": "0x8008C184",
+   "name": "ChangeClearPAD",
+   "size": 16
+  },
+  {
+   "address": "0x8008C194",
+   "name": "ChangeClearRCnt",
+   "size": 16
+  },
+  {
+   "address": "0x8008C1A4",
+   "name": "ResetCallback",
+   "size": 48
+  },
+  {
+   "address": "0x8008C1D4",
+   "name": "InterruptCallback",
+   "size": 48
+  },
+  {
+   "address": "0x8008C204",
+   "name": "DMACallback",
+   "size": 48
+  },
+  {
+   "address": "0x8008C234",
+   "name": "VSyncCallback",
+   "size": 52
+  },
+  {
+   "address": "0x8008C268",
+   "name": "VSyncCallbacks",
+   "size": 48
+  },
+  {
+   "address": "0x8008C298",
+   "name": "StopCallback",
+   "size": 48
+  },
+  {
+   "address": "0x8008C2C8",
+   "name": "CheckCallback",
+   "size": 16
+  },
+  {
+   "address": "0x8008C2D8",
+   "name": "SetIntrMask",
+   "size": 1348
+  },
+  {
+   "address": "0x8008C824",
+   "name": "_96_remove",
+   "size": 24
+  },
+  {
+   "address": "0x8008C83C",
+   "name": "ReturnFromException",
+   "size": 16
+  },
+  {
+   "address": "0x8008C84C",
+   "name": "ResetEntryInt",
+   "size": 16
+  },
+  {
+   "address": "0x8008C85C",
+   "name": "HookEntryInt",
+   "size": 16
+  },
+  {
+   "address": "0x8008C86C",
+   "name": "setjmp",
+   "size": 60
+  },
+  {
+   "address": "0x8008C8A8",
+   "name": "startIntrVSync",
+   "size": 288
+  },
+  {
+   "address": "0x8008C9C8",
+   "name": "startIntrDMA",
+   "size": 672
+  },
+  {
+   "address": "0x8008CC7C",
+   "name": "GetVideoMode",
+   "size": 28
+  },
+  {
+   "address": "0x8008CC98",
+   "name": "PCopen",
+   "size": 32
+  },
+  {
+   "address": "0x8008CCB8",
+   "name": "PCclose",
+   "size": 16
+  },
+  {
+   "address": "0x8008CCC8",
+   "name": "PClseek",
+   "size": 36
+  },
+  {
+   "address": "0x8008CDA8",
+   "name": "_SN_read",
+   "size": 24
+  },
+  {
+   "address": "0x8008CDC0",
+   "name": "SpuInit",
+   "size": 32
+  },
+  {
+   "address": "0x8008CDE0",
+   "name": "_SpuInit",
+   "size": 232
+  },
+  {
+   "address": "0x8008CEC8",
+   "name": "SpuStart",
+   "size": 120
+  },
+  {
+   "address": "0x8008CF40",
+   "name": "_spu_init",
+   "size": 1088
+  },
+  {
+   "address": "0x8008D380",
+   "name": "_spu_FiDMA",
+   "size": 188
+  },
+  {
+   "address": "0x8008D43C",
+   "name": "_spu_t",
+   "size": 640
+  },
+  {
+   "address": "0x8008D6BC",
+   "name": "_spu_Fw",
+   "size": 132
+  },
+  {
+   "address": "0x8008D740",
+   "name": "_spu_FsetRXX",
+   "size": 68
+  },
+  {
+   "address": "0x8008D784",
+   "name": "_spu_FsetRXXa",
+   "size": 164
+  },
+  {
+   "address": "0x8008D828",
+   "name": "_spu_FsetPCR",
+   "size": 168
+  },
+  {
+   "address": "0x8008D8D0",
+   "name": "_spu_Fw1ts",
+   "size": 104
+  },
+  {
+   "address": "0x8008D938",
+   "name": "_SpuDataCallback",
+   "size": 48
+  },
+  {
+   "address": "0x8008D968",
+   "name": "SpuQuit",
+   "size": 128
+  },
+  {
+   "address": "0x8008D9E8",
+   "name": "CloseEvent",
+   "size": 16
+  },
+  {
+   "address": "0x8008D9F8",
+   "name": "DisableEvent",
+   "size": 16
+  },
+  {
+   "address": "0x8008DA08",
+   "name": "SpuSetKey",
+   "size": 448
+  },
+  {
+   "address": "0x8008DBC8",
+   "name": "SpuGetKeyStatus",
+   "size": 144
+  },
+  {
+   "address": "0x8008DC58",
+   "name": "SpuWrite",
+   "size": 96
+  },
+  {
+   "address": "0x8008DCB8",
+   "name": "SpuSetTransferStartAddr",
+   "size": 96
+  },
+  {
+   "address": "0x8008DD18",
+   "name": "SpuIsTransferCompleted",
+   "size": 176
+  },
+  {
+   "address": "0x8008DDC8",
+   "name": "TestEvent",
+   "size": 16
+  },
+  {
+   "address": "0x8008DDD8",
+   "name": "SpuSetVoiceVolume",
+   "size": 128
+  },
+  {
+   "address": "0x8008DE58",
+   "name": "SpuSetVoicePitch",
+   "size": 112
+  },
+  {
+   "address": "0x8008DEC8",
+   "name": "SpuNSetVoiceAttr",
+   "size": 1488
+  },
+  {
+   "address": "0x8008E498",
+   "name": "_spu_note2pitch",
+   "size": 208
+  },
+  {
+   "address": "0x8008E568",
+   "name": "SpuGetVoicePitch",
+   "size": 32
+  },
+  {
+   "address": "0x8008E588",
+   "name": "SpuSetCommonAttr",
+   "size": 896
+  },
+  {
+   "address": "0x8008E938",
+   "name": "_bu_init",
+   "size": 16
+  },
+  {
+   "address": "0x8008E948",
+   "name": "InitCARD",
+   "size": 144
+  },
+  {
+   "address": "0x8008E9D8",
+   "name": "StartCARD",
+   "size": 72
+  },
+  {
+   "address": "0x8008EA20",
+   "name": "ReadInitPadFlag",
+   "size": 16
+  },
+  {
+   "address": "0x8008EA30",
+   "name": "SysEnqIntRP",
+   "size": 16
+  },
+  {
+   "address": "0x8008EA40",
+   "name": "SysDeqIntRP",
+   "size": 16
+  },
+  {
+   "address": "0x8008EA50",
+   "name": "InitCARD2",
+   "size": 16
+  },
+  {
+   "address": "0x8008EA60",
+   "name": "StartCARD2",
+   "size": 16
+  },
+  {
+   "address": "0x8008EA70",
+   "name": "_patch_card_info",
+   "size": 220
+  },
+  {
+   "address": "0x8008EB4C",
+   "name": "_patch_card",
+   "size": 148
+  },
+  {
+   "address": "0x8008EBE0",
+   "name": "_patch_card2",
+   "size": 112
+  },
+  {
+   "address": "0x8008EC50",
+   "name": "_copy_memcard_patch",
+   "size": 64
+  },
+  {
+   "address": "0x8008EC90",
+   "name": "MemCardStart",
+   "size": 112
+  },
+  {
+   "address": "0x8008ED00",
+   "name": "MemCardExist",
+   "size": 900
+  },
+  {
+   "address": "0x8008F084",
+   "name": "MemCardAccept",
+   "size": 784
+  },
+  {
+   "address": "0x8008F394",
+   "name": "MemCardReadData",
+   "size": 616
+  },
+  {
+   "address": "0x8008F5FC",
+   "name": "MemCardWriteData",
+   "size": 612
+  },
+  {
+   "address": "0x8008F860",
+   "name": "MemCardReadFile",
+   "size": 544
+  },
+  {
+   "address": "0x8008FA80",
+   "name": "MemCardWriteFile",
+   "size": 544
+  },
+  {
+   "address": "0x8008FCA0",
+   "name": "MemCardGetDirentry",
+   "size": 604
+  },
+  {
+   "address": "0x8008FEFC",
+   "name": "MemCardCallback",
+   "size": 20
+  },
+  {
+   "address": "0x8008FF10",
+   "name": "MemCardSync",
+   "size": 284
+  },
+  {
+   "address": "0x8009002C",
+   "name": "MemCardCreateFile",
+   "size": 252
+  },
+  {
+   "address": "0x80090128",
+   "name": "MemCardFormat",
+   "size": 464
+  },
+  {
+   "address": "0x800902F8",
+   "name": "open",
+   "size": 16
+  },
+  {
+   "address": "0x80090308",
+   "name": "lseek",
+   "size": 16
+  },
+  {
+   "address": "0x80090318",
+   "name": "read",
+   "size": 16
+  },
+  {
+   "address": "0x80090328",
+   "name": "close",
+   "size": 16
+  },
+  {
+   "address": "0x80090338",
+   "name": "nextfile",
+   "size": 16
+  },
+  {
+   "address": "0x80090348",
+   "name": "firstfile",
+   "size": 672
+  },
+  {
+   "address": "0x800905E8",
+   "name": "firstfile2",
+   "size": 16
+  },
+  {
+   "address": "0x800905F8",
+   "name": "_card_info",
+   "size": 16
+  },
+  {
+   "address": "0x80090608",
+   "name": "_card_load",
+   "size": 16
+  },
+  {
+   "address": "0x80090618",
+   "name": "_card_clear",
+   "size": 64
+  },
+  {
+   "address": "0x80090658",
+   "name": "_card_write",
+   "size": 16
+  },
+  {
+   "address": "0x80090668",
+   "name": "_new_card",
+   "size": 16
+  },
+  {
+   "address": "0x80090678",
+   "name": "UserFuncInit",
+   "size": 16
+  },
+  {
+   "address": "0x80090688",
+   "name": "UserFuncOpen",
+   "size": 124
+  },
+  {
+   "address": "0x80090704",
+   "name": "UserFuncExecute",
+   "size": 108
+  },
+  {
+   "address": "0x80090770",
+   "name": "UserFuncComplete",
+   "size": 24
+  },
+  {
+   "address": "0x80090828",
+   "name": "_card_start",
+   "size": 476
+  },
+  {
+   "address": "0x80090A04",
+   "name": "_clr_card_event",
+   "size": 264
+  },
+  {
+   "address": "0x80090B0C",
+   "name": "_get_card_event",
+   "size": 216
+  },
+  {
+   "address": "0x80090BE4",
+   "name": "_get_card_event_x",
+   "size": 216
+  },
+  {
+   "address": "0x80090CBC",
+   "name": "_chk_card_event",
+   "size": 60
+  },
+  {
+   "address": "0x80090CF8",
+   "name": "_chk_card_event_x",
+   "size": 60
+  },
+  {
+   "address": "0x80090D34",
+   "name": "_card_format2",
+   "size": 976
+  },
+  {
+   "address": "0x80091104",
+   "name": "_card_create2",
+   "size": 1728
+  },
+  {
+   "address": "0x800917C4",
+   "name": "bzero",
+   "size": 48
+  },
+  {
+   "address": "0x800917F4",
+   "name": "strncpy",
+   "size": 112
+  },
+  {
+   "address": "0x80091864",
+   "name": "_card_read",
+   "size": 16
+  },
+  {
+   "address": "0x80091874",
+   "name": "PadSetAct",
+   "size": 64
+  },
+  {
+   "address": "0x800918B4",
+   "name": "PadSetActAlign",
+   "size": 368
+  },
+  {
+   "address": "0x80091A24",
+   "name": "PadGetState",
+   "size": 208
+  },
+  {
+   "address": "0x80091AF4",
+   "name": "PadInfoMode",
+   "size": 256
+  },
+  {
+   "address": "0x80091BF4",
+   "name": "PadStartCom",
+   "size": 204
+  },
+  {
+   "address": "0x80091CC0",
+   "name": "PadStopCom",
+   "size": 68
+  },
+  {
+   "address": "0x80091D04",
+   "name": "PadInitMtap",
+   "size": 352
+  },
+  {
+   "address": "0x80091E64",
+   "name": "_padInitMtapPort",
+   "size": 3388
+  },
+  {
+   "address": "0x80092BA0",
+   "name": "_mtapFailAuto",
+   "size": 1028
+  },
+  {
+   "address": "0x80092FA4",
+   "name": "_padIsVsync",
+   "size": 104
+  },
+  {
+   "address": "0x8009300C",
+   "name": "_padIntPad",
+   "size": 400
+  },
+  {
+   "address": "0x8009319C",
+   "name": "_padInitSioMode",
+   "size": 1060
+  },
+  {
+   "address": "0x800935C0",
+   "name": "_padSioRW",
+   "size": 548
+  },
+  {
+   "address": "0x800937E4",
+   "name": "_padSioRW2",
+   "size": 636
+  },
+  {
+   "address": "0x80093A60",
+   "name": "_padClrIntSio0",
+   "size": 144
+  },
+  {
+   "address": "0x80093AF0",
+   "name": "_padWaitRXready",
+   "size": 40
+  },
+  {
+   "address": "0x80093B18",
+   "name": "_padSetCmd",
+   "size": 16
+  },
+  {
+   "address": "0x80093B28",
+   "name": "_padSendAtLoadInfo",
+   "size": 132
+  },
+  {
+   "address": "0x80093BAC",
+   "name": "_padRecvAtLoadInfo",
+   "size": 624
+  },
+  {
+   "address": "0x80093E1C",
+   "name": "_padGetActSize",
+   "size": 56
+  },
+  {
+   "address": "0x80093E54",
+   "name": "_padLoadActInfo",
+   "size": 1396
+  },
+  {
+   "address": "0x800943C8",
+   "name": "_padCmdParaMode",
+   "size": 168
+  },
+  {
+   "address": "0x80094470",
+   "name": "_padSetRC2wait",
+   "size": 32
+  },
+  {
+   "address": "0x80094490",
+   "name": "_padChkRC2wait",
+   "size": 2436
+  },
+  {
+   "address": "0x80094E14",
+   "name": "GsGetTimInfo",
+   "size": 240
+  }
+ ]
+}

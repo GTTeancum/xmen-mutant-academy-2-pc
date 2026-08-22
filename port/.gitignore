@@ -1,0 +1,18 @@
+# Recompiled game code is derived from the disc; regenerate it, do not commit it.
+generated/
+# Build output
+bin/
+obj/
+# Runtime state and diagnostics
+logs/
+shots/
+packs/
+settings.json
+interface.ini
+*.sav
+
+# Textures decoded from the disc, and the pack built from them. Game art: kept locally
+# so a rebuild is not needed to hand-edit a texture, never committed.
+assets/
+# The published single-file build.
+dist/

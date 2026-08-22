@@ -1,0 +1,124 @@
+{
+ "functions": [
+  {
+   "address": "0x80107EF0",
+   "name": "ptr_80107EF0",
+   "size": 88
+  },
+  {
+   "address": "0x80107F48",
+   "name": "ptr_80107F48",
+   "size": 8
+  },
+  {
+   "address": "0x80107F50",
+   "name": "ptr_80107F50",
+   "size": 288
+  },
+  {
+   "address": "0x80108070",
+   "name": "ptr_80108070",
+   "size": 372
+  },
+  {
+   "address": "0x801081E4",
+   "name": "ptr_801081E4",
+   "size": 348
+  },
+  {
+   "address": "0x80108340",
+   "name": "func_80108340",
+   "size": 200
+  },
+  {
+   "address": "0x80108408",
+   "name": "ptr_80108408",
+   "size": 40
+  },
+  {
+   "address": "0x80108430",
+   "name": "func_80108430",
+   "size": 196
+  },
+  {
+   "address": "0x801084F4",
+   "name": "func_801084F4",
+   "size": 1184
+  },
+  {
+   "address": "0x80108994",
+   "name": "func_80108994",
+   "size": 344
+  },
+  {
+   "address": "0x80108AEC",
+   "name": "ptr_80108AEC",
+   "size": 264
+  },
+  {
+   "address": "0x80108BF4",
+   "name": "func_80108BF4",
+   "size": 232
+  },
+  {
+   "address": "0x80108CDC",
+   "name": "ptr_80108CDC",
+   "size": 176
+  },
+  {
+   "address": "0x80108D8C",
+   "name": "func_80108D8C",
+   "size": 232
+  },
+  {
+   "address": "0x80108E74",
+   "name": "ptr_80108E74",
+   "size": 168
+  },
+  {
+   "address": "0x80108F1C",
+   "name": "func_80108F1C",
+   "size": 508
+  },
+  {
+   "address": "0x80109118",
+   "name": "func_80109118",
+   "size": 492
+  },
+  {
+   "address": "0x80109304",
+   "name": "func_80109304",
+   "size": 408
+  },
+  {
+   "address": "0x8010949C",
+   "name": "func_8010949C",
+   "size": 408
+  },
+  {
+   "address": "0x80109634",
+   "name": "func_80109634",
+   "size": 464
+  },
+  {
+   "address": "0x80109804",
+   "name": "func_80109804",
+   "size": 1380
+  },
+  {
+   "address": "0x80109D68",
+   "name": "func_80109D68",
+   "size": 3512
+  },
+  {
+   "address": "0x8010AB20",
+   "name": "ptr_8010AB20",
+   "size": 780
+  },
+  {
+   "address": "0x8010AE2C",
+   "name": "ptr_8010AE2C",
+   "size": 24
+  }
+ ]
+}

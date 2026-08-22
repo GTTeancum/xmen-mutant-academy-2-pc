@@ -1,0 +1,79 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <AssemblyName>XMenMA2</AssemblyName>
+        <RootNamespace>XMenMA2</RootNamespace>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <ServerGarbageCollection>true</ServerGarbageCollection>
+        <ConcurrentGarbageCollection>false</ConcurrentGarbageCollection>
+        <TieredPGO>true</TieredPGO>
+        <!-- the recompiled output is one huge partial class; keep the compiler happy -->
+        <NoWarn>$(NoWarn);CS0164;CS0219;CS0162;CS8321</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <Optimize>true</Optimize>
+        <DebugType>none</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+    </PropertyGroup>
+
+    <!--
+      `dotnet publish` produces a single self-contained executable: the .NET runtime,
+      every managed dependency and the native libraries (SDL, GLFW, OpenAL) are all
+      bundled into XMenMA2.exe, so nothing ships beside it but the game's own data.
+
+      Scoped to publishing on purpose. Applying the RID unconditionally would move the
+      normal build output to bin/Release/net10.0/win-x64/ and drag the whole runtime
+      into it on every build, which is slow and moves the folder the texture pack and
+      dumps live in.
+
+      Not trimmed: the runtime hosts Roslyn for mod compilation and reaches for types
+      reflectively, and a trimmer has no way to see those uses.
+    -->
+    <PropertyGroup Condition="'$(_IsPublishing)' == 'true'">
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <SelfContained>true</SelfContained>
+        <PublishSingleFile>true</PublishSingleFile>
+        <!--
+          Everything, not just the native libraries. Extracting the natives alone leaves
+          them in a temp folder while AppContext.BaseDirectory still points at the
+          executable, and Silk.NET searches BaseDirectory, so GLFW and OpenAL were
+          never found and the published build came up with no window and no audio:
+          "Couldn't find a suitable window platform", then "no usable gl context".
+          Running out of the extraction directory puts the managed assemblies and the
+          natives in the same place, which is where the loader looks.
+
+          The usual objection is that this moves BaseDirectory away from the executable.
+          Nothing here depends on that: Program.Main resolves the executable through
+          Environment.ProcessPath and makes it the working directory, and packs, saves,
+          logs and dumps are all found relative to that.
+        -->
+        <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+        <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+        <PublishTrimmed>false</PublishTrimmed>
+        <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+        <DebugType>none</DebugType>
+        <PublishDir>$(MSBuildProjectDirectory)\dist\</PublishDir>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\tools\RecompOne\RecompOne.Runtime\RecompOne.Runtime.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!--
+          Symbol names for stall dumps (see patches/Diag.cs), embedded rather than
+          copied: 0.4 MB of JSON is not worth a folder of loose files beside a
+          single-file build.
+        -->
+        <EmbeddedResource Include="config\funcmaps\*.json" Exclude="config\funcmaps\*_sweep.json">
+            <LogicalName>funcmaps.%(Filename)%(Extension)</LogicalName>
+        </EmbeddedResource>
+    </ItemGroup>
+
+</Project>
