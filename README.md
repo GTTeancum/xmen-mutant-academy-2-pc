@@ -104,6 +104,7 @@ safe, and deleting a file from the pack simply restores that texture.
 | `extract_textures.py` | disc to PNGs, named by the key the runtime looks them up by |
 | `merge_textures.py` | combines disc textures with textures observed at run time |
 | `verify_textures.py` | rejects bad decodes, flags what is not a picture |
+| `restore_alpha.py` | puts correct transparency back on a texture upscaled elsewhere |
 | `upscale_textures.py` | builds the 4x pack |
 | `closure.py`, `fixmaps.py`, `mipsdis.py` | recompilation support |
 
