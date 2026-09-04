@@ -34,6 +34,7 @@ public static class Program
         TextureDump.Install();
         TextureDump.InstallStats();
         Harness.Install();
+        Widescreen.Install();
 
         AppDomain.CurrentDomain.UnhandledException += (_, e) => Diag.Fatal(e.ExceptionObject as Exception);
 

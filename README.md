@@ -8,7 +8,7 @@ code runs directly, and the hardware it expects — GPU, SPU, CD drive, controll
 provided by the runtime.
 
 It runs end to end at 60 fps in a 1280x960 window, rasterising internally at 4x, with an
-optional 4x texture pack built from the game's own art.
+optional 4x texture pack built from the game's own art and optional widescreen output.
 
 ![Fight](docs/gameplay.png)
 
@@ -45,6 +45,26 @@ has not been compared against hardware.
 
 **Known rough edges** are listed in [TO_DO.md](TO_DO.md), which is kept honest rather
 than tidy — including the things that were tried and did not work.
+
+## Widescreen
+
+Off by default; **Settings > Display > Widescreen (16:9)** turns it on, and resizes the
+window to match.
+
+![Widescreen](docs/widescreen.png)
+
+The game culls anything that projects outside its own screen, so widening the area the
+renderer draws into achieves nothing — the scenery is dropped before the GPU sees it.
+Instead the perspective projection is squeezed by a quarter, which puts a 16:9 field of
+view inside the 4:3 screen the game believes in; its own culling then keeps all of it,
+and the frame is stretched back out at presentation. The stages are one and a half to
+three screens wide, so there is plenty there to show.
+
+Frames with no 3D in them — the movies, the front end, the VS card — are left at 4:3 and
+letterboxed, never stretched. The HUD is 2D and does go through the stretch, so the
+health bars reach the edges of the screen and the portraits are a third wider.
+
+Press **F12** at any time for a screenshot of exactly what is on screen.
 
 ## The texture pack
 
@@ -106,6 +126,7 @@ safe, and deleting a file from the pack simply restores that texture.
 | `verify_textures.py` | rejects bad decodes, flags what is not a picture |
 | `restore_alpha.py` | puts correct transparency back on a texture upscaled elsewhere |
 | `upscale_textures.py` | builds the 4x pack |
+| `wide_check.py` | tells the end of an arena apart from a renderer clipping it |
 | `closure.py`, `fixmaps.py`, `mipsdis.py` | recompilation support |
 
 Diagnostics live in `port/patches/`: `Diag.cs` (logging, watchdog, crash capture),

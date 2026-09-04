@@ -88,6 +88,34 @@ they are resolved, not until they are explained.
       draws becomes a GL texture. There is now an LRU eviction with a 512 MB budget in
       the runtime, but it has not been watched under a long session on this iGPU.
 
+## Widescreen
+
+- [ ] **The HUD is stretched a third wider.** The 3D is squeezed in the projection and
+      stretched back at presentation, so it comes out right; the HUD is 2D drawn at fixed
+      screen positions, never squeezed, and gets the stretch anyway. Matching primitives
+      against the positions the GTE produced does **not** identify the 3D — two fifths of
+      the stage fails it, and the misclassified geometry gets pulled off the screen edges
+      leaving the previous frame showing through. Measured, not guessed: 33,000 of 82,000
+      triangles across 120 frames of a fight. The real fix is provenance — tag the words
+      stored out of the GTE registers and read the tag when the drawing list is walked,
+      which needs the recompiler's COP2 emission changed as well as the GPU path.
+- [ ] **Never seen in motion.** Judged from single frames. Things a still cannot show:
+      whether the 3D/flat detection flips shape during a transition, whether anything
+      the game parks off-screen becomes visible now the view is wider, and whether the
+      hall of mirrors reported in play is actually gone.
+- [ ] **The squeeze changes what the game's own code sees.** Projected screen positions
+      feed anything the game does in screen space, not just drawing. Nothing has
+      misbehaved, but a camera or effect that reads back a projected coordinate is now
+      reading a squeezed one.
+- [x] **The output flickered between 4:3 and 16:9 mid-fight.** Presenting can run ahead
+      of the game, so a frame could go up with no projections since the last one purely
+      because the game had not built the next yet, and a single quiet present dropped the
+      shape back to 4:3. It now takes half a second of no 3D to count as a flat screen.
+      (2026-09-04)
+- [ ] **`wide_check.py` measures the old approach.** It compares brightness across the
+      4:3 frame edge, which only means anything when the render target is widened.
+      Harmless, but it answers a question the port no longer asks.
+
 ## Known rough edges
 
 - [ ] **~60 unreachable call targets.** `tools/closure.py` cannot resolve them because

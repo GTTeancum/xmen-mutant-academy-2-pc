@@ -7,6 +7,8 @@ using RecompOne.Runtime.Assets;
 using RecompOne.Runtime.Events;
 using RecompOne.Runtime.Hardware;
 using RecompOne.Runtime.Hle;
+using RecompOne.Runtime.Host;
+using Silk.NET.Input;
 
 namespace Recompiled;
 
@@ -20,9 +22,17 @@ namespace Recompiled;
 ///   XMENMA2_EXIT=900           quit after this frame
 ///   XMENMA2_SCRIPT=120:start;300:cross:8
 ///                              press a button at a frame, optionally for N frames
+///   XMENMA2_SHOT_PRESENTED=1   capture the screen rather than the console framebuffer
 ///
 /// Frames are read back from the GPU backend rather than off the desktop, so the
 /// capture is what the emulated console actually drew.
+///
+/// Two different pictures are available and they are not interchangeable. By default a
+/// capture is the console framebuffer at full internal resolution: anamorphic, exactly
+/// 512 pixels wide, and the right thing for comparing textures at 1:1. The presented
+/// picture is what the player is looking at -- widescreen margins, the black pillars
+/// either side of a movie, and the vertical stretched so the shapes are true. Anything
+/// about how the game *looks* has to be judged on that one, which is what F12 saves.
 /// </summary>
 public static class Capture
 {
@@ -36,6 +46,8 @@ public static class Capture
     static readonly HashSet<long> _shotFrames = new();
     static readonly List<Press> _script = new();
     static string _dir = "shots";
+    static bool _presented;
+    static bool _shotKeyWasDown;
     static long _every;
     static long _exit = -1;
     static bool _active;
@@ -71,6 +83,9 @@ public static class Capture
         var dir = Environment.GetEnvironmentVariable("XMENMA2_SHOT_DIR");
         if (!string.IsNullOrWhiteSpace(dir)) _dir = dir;
 
+        var presented = Environment.GetEnvironmentVariable("XMENMA2_SHOT_PRESENTED");
+        _presented = presented is "1" or "true" or "TRUE" or "yes";
+
         var mark = Environment.GetEnvironmentVariable("XMENMA2_MARK");
         if (long.TryParse(mark, out var mk) && mk > 0) { _markEvery = mk; _active = true; }
 
@@ -92,7 +107,8 @@ public static class Capture
             _active = true;
         }
 
-        // The frame counter feeds the watchdog, so listen even with nothing to capture.
+        // The frame counter feeds the watchdog, and F12 has to work on a normal launch,
+        // so listen even with nothing scripted to capture.
         if (_active) Directory.CreateDirectory(_dir);
         Event.AddListener<VSyncEvent>(OnFrame);
         if (!_active) return;
@@ -119,7 +135,9 @@ public static class Capture
             Console.WriteLine($"[frame {e.Frame}]");
 
         if (_shotFrames.Contains(e.Frame) || (_every > 0 && e.Frame % _every == 0))
-            Save(e.Frame);
+            Save(e.Frame, _presented);
+
+        PollShotKey();
 
         if (_exit > 0 && e.Frame >= _exit)
         {
@@ -158,16 +176,49 @@ public static class Capture
 
     // VRAM row 0 sits at framebuffer y=0, so glReadPixels' bottom-first order already
     // comes out top-first here -- no flip. Alpha is the PS1 mask bit, not opacity.
-    static void SaveScaled(long frame, byte[] rgba, int w, int h)
+    static void SaveScaled(long frame, byte[] rgba, int w, int h, string kind = "internal resolution")
     {
         for (int i = 3; i < rgba.Length; i += 4) rgba[i] = 255;
 
         string path = Path.Combine(_dir, $"frame_{frame:D5}.png");
         PngWriter.WriteRgba(path, rgba, w, h);
-        Console.WriteLine($"[capture] {path} {w}x{h} (internal resolution)");
+        Console.WriteLine($"[capture] {path} {w}x{h} ({kind})");
     }
 
-    static void Save(long frame)
+    /// <summary>
+    /// F12 saves what is on the screen, so judging how the game looks never needs the
+    /// window driven from outside or put fullscreen.
+    /// </summary>
+    static void PollShotKey()
+    {
+        bool down;
+        try { down = HostWindow.IsKeyDown(Key.F12); }
+        catch { return; }
+
+        if (down && !_shotKeyWasDown) Screenshot();
+        _shotKeyWasDown = down;
+    }
+
+    public static void Screenshot()
+    {
+        var backend = GpuHle.Backend;
+        if (backend is not { Ready: true }) return;
+
+        var shot = backend.ReadPresented(out int w, out int h);
+        if (shot == null || w <= 0 || h <= 0)
+        {
+            Console.WriteLine("[capture] screenshot unavailable on this backend");
+            return;
+        }
+
+        for (int i = 3; i < shot.Length; i += 4) shot[i] = 255;
+        Directory.CreateDirectory(_dir);
+        string path = Path.Combine(_dir, $"screenshot-{DateTime.Now:yyyyMMdd-HHmmss-fff}.png");
+        PngWriter.WriteRgba(path, shot, w, h);
+        Console.WriteLine($"[capture] {path} {w}x{h} (screen)");
+    }
+
+    static void Save(long frame, bool presented = false)
     {
         var gpu = Runtime.Gpu;
         var backend = GpuHle.Backend;
@@ -177,12 +228,31 @@ public static class Capture
         if (w <= 0 || h <= 0) return;
         int x = gpu.DisplayX, y = gpu.DisplayY;
 
+        if (presented)
+        {
+            var shot = backend.ReadPresented(out int pw, out int ph);
+            if (shot != null && pw > 0 && ph > 0)
+            {
+                SaveScaled(frame, shot, pw, ph, "screen");
+                return;
+            }
+        }
+
         // Prefer the full internal resolution: VRAM is stored at RenderScale, so this is
         // the image the rasteriser actually produced rather than a console-resolution
         // capture. Not available for 24bpp FMV, where VRAM holds packed byte triples
         // that only make sense read back at native width.
         if (!gpu.Display24Bit)
         {
+            // Widescreen margins live only in the display target; VRAM keeps the
+            // console-sized centre, so ask for the presented image first.
+            var wide = backend.ReadDisplayScaled(x, y, w, h, out int ww, out int wh);
+            if (wide != null && ww > 0 && wh > 0)
+            {
+                SaveScaled(frame, wide, ww, wh);
+                return;
+            }
+
             var scaled = backend.ReadScaled(x, y, w, h, out int sw, out int sh);
             if (scaled != null && sw > 0 && sh > 0)
             {

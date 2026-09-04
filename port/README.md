@@ -99,6 +99,8 @@ passes produce them, in `tools/`:
   silent unless `XMENMA2_TRACE` is set.
 - **`TextureDump`** — headless control of the runtime's texture dumper, which is
   otherwise only reachable from the debug menu.
+- **`Widescreen`** — the widescreen setting, the Settings > Display control that writes
+  it, and the window reshaping that goes with it. See below.
 
 ## Upscaled textures
 
@@ -237,7 +239,75 @@ not fit in this machine's iGPU at any tile size. Don't run the upscaler while th
 is running: both want the GPU, and on shared memory the heavier models fail to
 allocate.
 
+## Widescreen
+
+Two shapes, 4:3 and 16:9. Off by default; **Settings > Display > Widescreen (16:9)**
+turns it on, takes effect immediately, and is remembered in `interface.ini`. The window
+is resized to match the setting, because a 16:9 frame inside a 4:3 window gets boxed a
+second time and looks like a fault. `XMENMA2_WIDE=on` forces it for headless runs.
+
+### It has to be done in the projection, not the renderer
+
+The first attempt widened the render target: 86 extra pixels each side of the game's 512,
+with the draw clip opened to cover them. It was wrong, and the reason is worth writing
+down because it looks so plausible.
+
+**The game culls geometry that projects outside its own screen.** Whatever the renderer
+is willing to draw into, nothing arrives to fill it — the sides of a stage stay empty
+however far out the draw area goes. Every measurement of the widened target agreed the
+renderer was drawing everything it was handed, and that was true and beside the point.
+The stages are one and a half to three screens wide; the scenery was there all along,
+dropped before the GPU ever saw it.
+
+So the squeeze happens in `Gte.Rtp`, where perspective projection turns a world position
+into a screen position. `SqueezeX` scales the offset-from-centre term by 3/4, which puts
+a 16:9 field of view inside the 4:3 screen the game believes in. Its culling then keeps
+all of it, and `GlCore.PresentDisplay` reports the frame as 16:9 so the host stretches it
+back out. Net effect: the geometry is correctly proportioned and there is more of it.
+
+### What is and is not stretched
+
+Only a frame the game built in 3D holds the squeezed view. The movies, the boot logos,
+the front end and the VS card are flat pictures — stretching those would just make them
+fat. `Gte.Projections` counts perspective projections between presents: more than 64 and
+the frame is treated as 3D and stretched to 16:9, zero and it is reported as 4:3 and the
+host letterboxes it. The count has to fall to zero rather than merely drop, so a quiet
+frame mid-fight cannot flip the shape of the output for one frame.
+
+Nothing is padded at presentation. Padding a frame out to a fixed shape boxes the picture
+a second time inside whatever shape the window happens to be; fitting is the window's job.
+
+**The HUD is stretched, and that is the cost of this approach.** Health bars, timer and
+portraits are 2D sprites the game draws at fixed screen positions, so they never went
+through the projection squeeze but do go through the stretch back out, and come out a
+third wider. They reach the edges of the screen instead of sitting in a 4:3 island, which
+is arguably the better look, but the portraits are visibly broader.
+
+Undoing it means telling a flat overlay from the 3D at draw time, and one attempt at that
+is worth recording so nobody repeats it. The idea was that the GTE produces the exact
+screen positions the game copies into its drawing packets, so a primitive whose corners
+are all GTE output is 3D and anything else is an overlay. It does not work: **two fifths
+of the stage fails the test** — 33,000 of 82,000 triangles over 120 frames of a fight,
+and loosening it to *any* corner matching, or keeping two frames of projections in case
+the drawing list is built a frame ahead, moves that by less than a percent. The game does
+not copy GTE output into packets unchanged. Squeezing the misclassified stage geometry
+pulls it away from the screen edges and leaves the previous frame showing in the gaps.
+
+Doing it properly means provenance rather than a guess: tag the words the game stores out
+of the GTE registers, and read that tag back when the drawing list is walked. That is a
+change in the recompiler's COP2 emission as well as the GPU path, and it has not been
+attempted.
+
 ## Diagnostics
+
+**F12 takes a screenshot** of exactly what is on the screen, into `shots/`. Not the
+console framebuffer — the presented frame, with the widescreen margins, the black
+pillars either side of a movie, and the vertical stretched so shapes are true. Anything
+about how the game *looks*, and every widescreen artifact in particular, has to be
+judged on that picture rather than on a VRAM readback, which is anamorphic and the wrong
+shape besides. `XMENMA2_SHOT_PRESENTED=1` switches the scripted captures to it too; they
+default to the console framebuffer at internal resolution, which is what the texture
+work needs.
 
 Everything goes into one file: `logs/xmenma2-<timestamp>.log`, every line timestamped
 and tagged with the frame number, flushed immediately. Console output is teed into it,
@@ -272,6 +342,8 @@ printing every entry (the `debug` option) is far too slow to reach a failure.
 | `XMENMA2_TRACE` | enable the `Trace` hooks |
 | `XMENMA2_PRIMS` | frames to log every drawn primitive on |
 | `XMENMA2_DUMP` | `tiles`, `pages` or `all` — dump textures for upscaling |
+| `XMENMA2_WIDE` | `on` / `off` — widescreen, overrides the setting |
+| `XMENMA2_SHOT_PRESENTED` | capture the screen, not the console framebuffer |
 
 ## Changes made to RecompOne
 
@@ -325,6 +397,28 @@ and each fixes something this port hit:
   it. That is the only event in the GPU command set that says "these pixels are one
   picture". It is also what makes textures read straight off the disc addressable, since
   a TIM's own extent is the extent the game uploads.
+- **A screenshot of the screen, not of the console** (`GlCore.ReadPresented`,
+  `IGpuBackend`) — every other readback here is console or VRAM space, which is
+  anamorphic and, with widescreen on, not even the same shape as what the player is
+  looking at. Judging how the game *looks* on one of those is how a whole afternoon went
+  into deciding whether black at the sides was the renderer or the scenery. This returns
+  the presented frame, margins and pillars included, with the vertical stretched so a
+  square in the game is square in the PNG. `Capture` saves it on **F12**, and on the
+  scripted frames when `XMENMA2_SHOT_PRESENTED=1`.
+- **The window can be resized** (`HostWindow.SetSize`) — the display settings can change
+  the shape of the output, and a window left at the old shape boxes the picture on all
+  four sides.
+- **Widescreen margins are cleared each frame** (`GlCore.ClearStaleMargins`) — see the
+  widescreen section; without it the sides of the screen smear the previous frame.
+- **A narrower picture is padded out to the widescreen aspect** (`GlCore.PresentDisplay`)
+  — so the output is one shape throughout rather than changing between menus and fights.
+- **Captures can be taken from the widened display target** (`GlCore`, `IGpuBackend`)
+  — the widescreen margins exist only in the display render target; writeback puts the
+  console-sized centre back into VRAM and drops them. A screenshot read out of VRAM is
+  therefore always 4:3 no matter what the window is showing, which made every headless
+  check of widescreen come back looking like it had not worked. `ReadDisplayScaled`
+  reads the presented target instead, margins included, and returns null when nothing
+  is being widened so the VRAM path stays the answer for 4:3.
 - **Region lookups are counted by depth** (`TextureResolver`) — `XMENMA2_TEXSTATS=1`
   reports, per depth, how many whole-texture regions were accepted and how many were
   refused for each of the four possible reasons. Without that, "no 16bpp textures in
