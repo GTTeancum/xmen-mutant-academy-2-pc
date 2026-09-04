@@ -277,26 +277,41 @@ frame mid-fight cannot flip the shape of the output for one frame.
 Nothing is padded at presentation. Padding a frame out to a fixed shape boxes the picture
 a second time inside whatever shape the window happens to be; fitting is the window's job.
 
-**The HUD is stretched, and that is the cost of this approach.** Health bars, timer and
-portraits are 2D sprites the game draws at fixed screen positions, so they never went
-through the projection squeeze but do go through the stretch back out, and come out a
-third wider. They reach the edges of the screen instead of sitting in a 4:3 island, which
-is arguably the better look, but the portraits are visibly broader.
+### The HUD, and telling it from the stage
 
-Undoing it means telling a flat overlay from the 3D at draw time, and one attempt at that
-is worth recording so nobody repeats it. The idea was that the GTE produces the exact
-screen positions the game copies into its drawing packets, so a primitive whose corners
-are all GTE output is 3D and anything else is an overlay. It does not work: **two fifths
-of the stage fails the test** — 33,000 of 82,000 triangles over 120 frames of a fight,
-and loosening it to *any* corner matching, or keeping two frames of projections in case
-the drawing list is built a frame ahead, moves that by less than a percent. The game does
-not copy GTE output into packets unchanged. Squeezing the misclassified stage geometry
-pulls it away from the screen edges and leaves the previous frame showing in the gaps.
+The HUD is drawn flat at fixed screen positions, so it never goes through the projection
+squeeze but does go through the stretch, and would come out a third wide. Fixing that
+means separating it from the stage at draw time, and **nothing in the GPU stream does
+it**. Three separators were tried and measured, and all three fail:
 
-Doing it properly means provenance rather than a guess: tag the words the game stores out
-of the GTE registers, and read that tag back when the drawing list is walked. That is a
-change in the recompiler's COP2 emission as well as the GPU path, and it has not been
-attempted.
+- **The positions the GTE produced.** The game sets the GTE screen offset to zero and
+  adds its own anchor per object, so the projected value is never what lands in the
+  packet: 75,000 of 82,000 triangles in a fight have no corner matching any of the 7,700
+  positions projected that frame, and no constant offset relates the two sets.
+- **Palette.** Thirteen CLUTs are unique to the HUD and eight to the stage, but four are
+  shared, including the commonest one in the HUD.
+- **Which drawing call it arrived in.** During a fight there is exactly one ordering
+  table per frame and `DrawPrim` is never called, so the HUD is interleaved with the
+  stage by depth in a single list.
+
+What separates them is the game's own code. `func_80073630` asserts a sprite index is
+below 225 and indexes a table at `0x800E30D8` with a stride of `0x58`, each record
+holding two `POLY_FT4` packets -- one per framebuffer -- followed by their two tag words.
+That table is the game's entire 2D overlay list, and the address a primitive was
+assembled at is carried through to the renderer on `PrimFlags.PacketAddress`. Primitives
+built inside the table are squeezed by the same 3/4 the projection uses, so the stretch
+returns them to the shape they were drawn.
+
+Measured against a fight before it was built on: every one of the HUD's primitives is
+assembled inside that range, all 1,371 of the frame's others are outside it, and nothing
+else in the game lives near it.
+
+Finding it needed a way to answer "what wrote this address", which a recompilation cannot
+answer the way an emulator can -- there is no program counter. `WriteProbe` snapshots the
+call ring on the first write into a range instead, and the recompiled functions record
+their own address on entry, so a HUD packet identified on screen leads back to the routine
+that assembled it. `XMENMA2_WRITEPROBE=e35a8-e35bf@4900` is that, and how the sprite table
+was found.
 
 ## Diagnostics
 

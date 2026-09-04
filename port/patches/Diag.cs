@@ -349,6 +349,7 @@ public static class Diag
         Write($"[prim] n={e.Count} " +
               $"{(e.Textured ? "T" : "-")}{(e.SemiTransparent ? "S" : "-")}" +
               $"{(e.Gouraud ? "G" : "-")}{(e.Raw ? "R" : "-")} " +
-              $"clut={e.Clut:X4} area=[{e.DrawLeft},{e.DrawTop}..{e.DrawRight},{e.DrawBottom}] {v}");
+              $"clut={e.Clut:X4} pkt={e.PacketAddress:X8} " +
+              $"area=[{e.DrawLeft},{e.DrawTop}..{e.DrawRight},{e.DrawBottom}] {v}");
     }
 }

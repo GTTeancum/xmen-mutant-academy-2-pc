@@ -61,8 +61,13 @@ and the frame is stretched back out at presentation. The stages are one and a ha
 three screens wide, so there is plenty there to show.
 
 Frames with no 3D in them — the movies, the front end, the VS card — are left at 4:3 and
-letterboxed, never stretched. The HUD is 2D and does go through the stretch, so the
-health bars reach the edges of the screen and the portraits are a third wider.
+letterboxed, never stretched.
+
+The HUD is flat artwork at fixed screen positions, so it would come out a third wide.
+Nothing in the GPU stream separates it from the stage — same primitives, one ordering
+table, shared palettes — so the separation comes from the game's own code: a sprite table
+at `0x800E30D8` holding every 2D element it draws. Primitives assembled in there are
+squeezed to match, and come out the shape they were drawn.
 
 Press **F12** at any time for a screenshot of exactly what is on screen.
 

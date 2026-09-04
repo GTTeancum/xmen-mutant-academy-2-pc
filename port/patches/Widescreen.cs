@@ -41,6 +41,12 @@ public static class Widescreen
     const string On = "16:9";
     const string Off = "off";
 
+    // The game's 2D overlay list, as a RAM offset. From func_80073630, which asserts the
+    // sprite index is below SpriteCount and indexes SpriteTable by SpriteStride.
+    const uint SpriteTable = 0x000E30D8;
+    const uint SpriteCount = 225;
+    const uint SpriteStride = 0x58;
+
     static string _forced;      // XMENMA2_WIDE, if it was set
     static string _applied;     // what Display.WideAspect currently reflects
 
@@ -87,6 +93,22 @@ public static class Widescreen
         Display.WideAspect = on ? 16f / 9f : 0f;
         Display.Squeezing = on;
         Gte.SqueezeX = on ? (3 * 65536) / 4 : 65536;
+
+        // The HUD is drawn flat at fixed screen positions, so it never goes through that
+        // squeeze but does get the stretch, and would come out a third wide. It has to be
+        // squeezed to match, which means telling it apart from the stage -- and nothing in
+        // the GPU stream does: both are gouraud textured triangles, in one ordering table,
+        // sharing palettes.
+        //
+        // The game's own code does. func_80073630 bounds-checks a sprite index against
+        // 225 and indexes a table at 0x800E30D8 with a stride of 0x58, each record holding
+        // two POLY_FT4 packets -- one per framebuffer -- and their two tag words. That
+        // table is the game's entire 2D overlay list. Checked against a fight: every one of
+        // the HUD's primitives is assembled inside it, all 1,371 of the frame's others are
+        // outside it, and no packet below the table's neighbourhood belongs to anything
+        // else.
+        Display.SetOverlay(on ? SpriteTable : 0, on ? SpriteTable + SpriteCount * SpriteStride : 0,
+                           on ? 0.75f : 0f);
 
         // 4:3 on the first frame is the default; only say something once it matters.
         if (first && !on) return;

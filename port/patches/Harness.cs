@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using RecompOne.Runtime;
 using RecompOne.Runtime.Events;
+using RecompOne.Runtime.Diagnostics;
 using RecompOne.Runtime.Memory;
 
 namespace Recompiled;
@@ -20,6 +21,8 @@ namespace Recompiled;
 ///   XMENMA2_RAMDUMP=2700,2900     write ram-&lt;frame&gt;.bin at these frames
 ///   XMENMA2_POKE=3000:80098abc=5  write a byte (or =5:w / =5:l for 16/32-bit)
 ///   XMENMA2_WATCH=80098abc,4      log this address every frame it changes
+///   XMENMA2_WRITEPROBE=e3550-e5700
+///                                 name the code that writes a range of RAM
 ///
 /// Addresses are PlayStation addresses; the usual 0x8009xxxx form works, and so does a
 /// bare RAM offset. All of this is off unless the environment asks for it.
@@ -56,6 +59,7 @@ public static class Harness
         ParseDumps(Environment.GetEnvironmentVariable("XMENMA2_RAMDUMP"));
         ParsePokes(Environment.GetEnvironmentVariable("XMENMA2_POKE"));
         ParseWatches(Environment.GetEnvironmentVariable("XMENMA2_WATCH"));
+        ParseProbe(Environment.GetEnvironmentVariable("XMENMA2_WRITEPROBE"));
         _dir = Environment.GetEnvironmentVariable("XMENMA2_RAMDIR") ?? "ram";
         if (!_active) return;
 
@@ -116,6 +120,74 @@ public static class Harness
         }
     }
 
+    /// <summary>
+    /// XMENMA2_WRITEPROBE=e3550-e5700 -- name the game code that writes a range of RAM.
+    ///
+    /// The drawing packets on screen say nothing about which routine assembled them, and
+    /// a recompilation has no program counter to catch in the act. WriteProbe snapshots
+    /// the call ring on the first write into the range instead, and this reports the tail
+    /// of it once per frame, so a packet identified on screen leads back to its code.
+    /// </summary>
+    static void ParseProbe(string spec)
+    {
+        if (string.IsNullOrWhiteSpace(spec)) return;
+
+        // An optional @frame holds off arming. The same buffers get reused by every
+        // screen, so without it the probe spends its budget on the front end long
+        // before the thing being investigated is on screen.
+        int at = spec.IndexOf('@');
+        if (at >= 0)
+        {
+            long.TryParse(spec[(at + 1)..].Trim(), out _probeFrom);
+            spec = spec[..at];
+        }
+
+        int dash = spec.IndexOf('-');
+        if (dash <= 0) return;
+
+        _probeLo = ParseAddress(spec[..dash]) & 0x1FFFFF;
+        _probeHi = ParseAddress(spec[(dash + 1)..]) & 0x1FFFFF;
+        if (_probeHi < _probeLo) (_probeLo, _probeHi) = (_probeHi, _probeLo);
+
+        _probing = true;
+        _active = true;
+    }
+
+    static bool _probing, _probeArmed;
+    static long _probeFrom;
+    static uint _probeLo, _probeHi;
+    static int _probeReports;
+
+    static void ReportProbe(long frame)
+    {
+        if (!_probeArmed)
+        {
+            if (frame < _probeFrom) return;
+            _probeArmed = true;
+            WriteProbe.Arm(_probeLo, _probeHi);
+            Console.WriteLine($"[probe] armed on 0x{_probeLo:X6}-0x{_probeHi:X6} at frame {frame}");
+            return;
+        }
+
+        if (!WriteProbe.TryTake(out uint offset, out var callers)) return;
+        if (++_probeReports > 24) { WriteProbe.Disarm(); return; }
+
+        // Most recent last: the tail is what was running when the write landed. Repeats
+        // are collapsed, since a routine called in a loop otherwise fills the whole line.
+        var trail = new List<string>();
+        uint prev = 0; int run = 0;
+        foreach (uint a in callers)
+        {
+            if (a == prev) { run++; continue; }
+            if (prev != 0) trail.Add(run > 1 ? $"{prev:X8}x{run}" : $"{prev:X8}");
+            prev = a; run = 1;
+        }
+        if (prev != 0) trail.Add(run > 1 ? $"{prev:X8}x{run}" : $"{prev:X8}");
+
+        Console.WriteLine($"[probe] frame {frame} wrote 0x{offset:X6} <- " +
+                          string.Join(" ", trail.GetRange(Math.Max(0, trail.Count - 12), Math.Min(12, trail.Count))));
+    }
+
     static uint Read(IMemory mem, uint address, int width) => width switch
     {
         4 => mem.ReadU32(address),
@@ -127,6 +199,8 @@ public static class Harness
     {
         var mem = Runtime.Mem;
         if (mem == null) return;
+
+        if (_probing) ReportProbe(e.Frame);
 
         foreach (var p in _pokes)
         {
