@@ -92,13 +92,24 @@ they are resolved, not until they are explained.
 
 - [ ] **The HUD is stretched a third wider.** The 3D is squeezed in the projection and
       stretched back at presentation, so it comes out right; the HUD is 2D drawn at fixed
-      screen positions, never squeezed, and gets the stretch anyway. Matching primitives
-      against the positions the GTE produced does **not** identify the 3D — two fifths of
-      the stage fails it, and the misclassified geometry gets pulled off the screen edges
-      leaving the previous frame showing through. Measured, not guessed: 33,000 of 82,000
-      triangles across 120 frames of a fight. The real fix is provenance — tag the words
-      stored out of the GTE registers and read the tag when the drawing list is walked,
-      which needs the recompiler's COP2 emission changed as well as the GPU path.
+      screen positions, never squeezed, and gets the stretch anyway. Fixing it needs the
+      HUD told apart from the stage at draw time. Three ways of doing that from the GPU
+      stream alone have been tried and measured, and none of them work:
+      - **Match against the positions the GTE produced.** Dead. The game sets the GTE
+        screen offset to zero and adds its own anchor per object, so the projected value
+        is never what lands in the packet: of 82,000 triangles in a fight, 75,000 have
+        *no* corner matching any of the 7,700 positions projected that frame, and no
+        constant offset relates the two sets — the best candidate accounts for 4% of
+        vertices, which is chance. Squeezing the misclassified stage pulls it off the
+        screen edges and the previous frame shows through the gaps.
+      - **Match by palette.** Dead. Thirteen CLUTs are unique to the HUD bands and eight
+        to the stage, but four are shared, including the commonest one.
+      - **Match by which drawing call it arrived in.** Dead. During a fight there is
+        exactly one ordering table per frame and `DrawPrim` is never called, so the HUD
+        is interleaved with the stage by depth in a single list.
+      What is left is the game's own code: find where the fight overlay composes the HUD
+      packets and squeeze the coordinates there. That means disassembling it, which is
+      the same wall the character-select work hit.
 - [ ] **Never seen in motion.** Judged from single frames. Things a still cannot show:
       whether the 3D/flat detection flips shape during a transition, whether anything
       the game parks off-screen becomes visible now the view is wider, and whether the
