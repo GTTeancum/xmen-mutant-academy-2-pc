@@ -35,18 +35,73 @@ cat > "$STAGE/README.txt" <<'TXT'
 X-Men: Mutant Academy 2 -- PC port
 ==================================
 
-You need your own copy of the disc. Nothing here contains the game.
+The game recompiled to run natively on Windows. It is not an emulator, and it does
+not need a PlayStation BIOS.
 
-Put the disc image next to XMenMA2.exe -- the .cue and all of its .bin tracks, or a
-single .chd -- and run the executable. It will find the .cue on its own. You can also
-drop a .cue onto the executable, or pass one as an argument.
+You do need your own copy of the disc. Nothing in this download contains the game.
 
-  Settings > Display     widescreen (16:9), fullscreen, internal resolution
-  F12                    screenshot of exactly what is on screen, into shots/
 
-The packs folder holds upscaled artwork. Anything it does not cover falls back to the
-game's own art, so you can delete individual files to compare them against the
-originals, or delete the whole folder to turn the upscales off.
+Installing
+----------
+1. Unzip it anywhere. There is no installer, and nothing is written outside this
+   folder.
+
+2. Put your disc image in this folder, beside XMenMA2.exe. Either:
+     - a .cue file together with all of its .bin tracks, or
+     - a single .chd
+
+3. Run XMenMA2.exe.
+
+It finds the .cue by itself and remembers where it is. If it cannot find one it
+will ask, with a Browse button. You can also drag a .cue onto the executable.
+
+Requirements: 64-bit Windows, and a graphics driver with OpenGL 2.1 or newer.
+Nothing else to install.
+
+
+Controls
+--------
+Keyboard, out of the box:
+
+    D-pad     arrow keys        Start    Enter
+    Cross     Z                 Select   Right Shift
+    Circle    X
+    Square    A
+    Triangle  S
+    L1  Q     R1  W
+    L2  E     R2  R
+    L3  F     R3  G
+
+A gamepad is picked up automatically if one is plugged in. Both keyboard and pad
+can be rebound under Settings > Input.
+
+
+Settings
+--------
+    Settings > Display    16:9 widescreen, fullscreen, internal resolution
+    Settings > Audio      volume
+    Settings > Input      key and pad bindings
+    F12                   screenshot of what is on screen, into shots/
+
+Widescreen widens the view rather than stretching it, so a fight shows more of the
+arena instead of a fatter picture. Menus and movies have no more picture to show
+and stay 4:3. Turning it on resizes the window to match.
+
+
+The packs folder
+----------------
+Upscaled artwork, 4x, built from the game's own art. Anything it does not cover
+falls back to the original, so you can delete one file from it to compare that
+texture against the original, or delete the whole folder to turn the upscales off.
+
+
+Where things end up
+-------------------
+    carda.sav, cardb.sav    memory cards
+    shots/                  screenshots
+    logs/                   one log per run; start here if something goes wrong
+    settings.json           disc path, volumes, controls
+    interface.ini           window size and display settings
 TXT
 
 SIZE=$(du -sm "$STAGE" | cut -f1)
