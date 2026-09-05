@@ -145,9 +145,16 @@ Diagnostics live in `port/patches/`: `Diag.cs` (logging, watchdog, crash capture
 Not a texture. It and 87 other full-screen images — the whole concept-art gallery — are
 512x480 8bpp pictures decoded straight into the framebuffer, so they never pass through
 the texture path at all. Format: 18-byte header, 768-byte BGR palette, pixels at 784,
-rows bottom-up. `port/assets/fullscreen/` holds them once extracted. Because they bypass
-the texture path, the pack cannot replace them; that would need a hook on the
-framebuffer upload, which does not exist yet.
+rows bottom-up. `port/assets/fullscreen/` holds them once extracted.
+
+They are upscaled now, by the same 4x pipeline as the textures. They do not arrive as
+pictures — the game uploads one row at a time, 480 separate transfers for a splash — so
+the rows are reassembled, hashed by their pixels, and a matching image in the pack is
+written over that part of video memory at full internal resolution. Nothing changes when
+the pack has no match.
+
+Only the splash is in the pack so far. The other 87 need visiting once with
+`XMENMA2_DUMP=images` to collect them, and then the same upscale.
 
 ## Legal
 

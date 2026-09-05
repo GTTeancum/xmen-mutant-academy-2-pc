@@ -115,6 +115,23 @@ they are resolved, not until they are explained.
       4:3 frame edge, which only means anything when the render target is widened.
       Harmless, but it answers a question the port no longer asks.
 
+## Full-screen pictures
+
+- [x] **The pack could not reach them.** Pictures decoded straight into video memory
+      bypass the texture path entirely, so the splash stayed at console resolution in
+      front of upscaled menus. The uploads are now reassembled, hashed and replaced at
+      full internal resolution. (2026-09-04)
+- [ ] **Only the splash is in the pack.** The other 87 concept-art plates need visiting
+      once with `XMENMA2_DUMP=images` to collect them, then the same
+      `--only images` upscale. That means reaching the gallery, which is the same
+      "get to a specific screen on purpose" problem as the character select.
+- [ ] **The mask bit is not carried over.** A replacement is written fully opaque. The
+      originals set the mask on every pixel, and nothing has been seen drawing over one
+      of these pictures with mask testing on, so this has cost nothing yet -- but it is
+      an assumption, not a finding.
+- [ ] **Judged from captures.** The splash is visibly sharper in a presented frame, but
+      like the rest of the pack it has never been watched on a real screen.
+
 ## Known rough edges
 
 - [ ] **~60 unreachable call targets.** `tools/closure.py` cannot resolve them because

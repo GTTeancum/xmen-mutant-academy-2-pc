@@ -313,6 +313,32 @@ their own address on entry, so a HUD packet identified on screen leads back to t
 that assembled it. `XMENMA2_WRITEPROBE=e35a8-e35bf@4900` is that, and how the sprite table
 was found.
 
+## Full-screen pictures
+
+Some art never reaches the texture path. The splash, and the 87 concept-art plates
+behind it, are decoded straight into video memory as whole 512x480 pictures, so however
+complete the texture pack gets it can never touch them -- at 4x internal resolution they
+were the one thing left on screen at console resolution, a soft title card in front of
+sharp menus.
+
+They do not arrive as pictures either. The game uploads them a row at a time: 480
+separate 512x1 transfers to consecutive rows, all inside one frame. `ScreenImages`
+reassembles a run of uploads that share an x and a width and stack directly on each
+other, and when the run ends it hashes what accumulated and looks it up. A run narrower
+than 256 pixels or shorter than 64 rows is texture data being staged, not a picture --
+this game stages textures in 24-pixel strips, hundreds of them per boot.
+
+A match is written over the same region of video memory at full internal resolution,
+which is the entire point: the original goes in first and is then covered, so a pack
+without the picture changes nothing. The replacement has to be exactly the region at
+render scale; anything else would need resampling, and a resampled replacement is not
+obviously better than the original.
+
+Collect them with `XMENMA2_DUMP=images`, which writes each picture named by the hash the
+runtime looks it up by, then upscale with `--only images`. They go to `images/` in the
+pack rather than `textures/`, since they are keyed by their pixels rather than by
+texture page.
+
 ## Diagnostics
 
 **F12 takes a screenshot** of exactly what is on the screen, into `shots/`. Not the
@@ -356,7 +382,8 @@ printing every entry (the `debug` option) is far too slow to reach a failure.
 | `XMENMA2_EXIT` | quit after frame N |
 | `XMENMA2_TRACE` | enable the `Trace` hooks |
 | `XMENMA2_PRIMS` | frames to log every drawn primitive on |
-| `XMENMA2_DUMP` | `tiles`, `pages` or `all` — dump textures for upscaling |
+| `XMENMA2_DUMP` | `tiles`, `pages`, `images` or `all` — dump art for upscaling |
+| `XMENMA2_IMAGE_DIR` | where screen-image dumps go (default `dump/images`) |
 | `XMENMA2_WIDE` | `on` / `off` — widescreen, overrides the setting |
 | `XMENMA2_SHOT_PRESENTED` | capture the screen, not the console framebuffer |
 

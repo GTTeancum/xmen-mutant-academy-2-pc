@@ -58,7 +58,12 @@ Options:
                     is the thing that looks wrong when magnified. Kept only so old
                     packs can be reproduced.
     --batch N       images per ESRGAN invocation (default 2000)
-    --only tiles|pages|both
+    --only tiles|pages|images|both|all
+                    'both' is tiles and pages, as before. 'images' is the pictures the
+                    game decodes straight into video memory rather than drawing as
+                    textures -- the splash, the gallery plates -- collected with
+                    XMENMA2_DUMP=images. They go to `images/` in the pack, since they
+                    are looked up by their pixels rather than by texture page.
     --force         re-upscale images already present in the output pack
 
 Don't run this while the game is running. Both want the GPU, and on a shared-memory
@@ -331,12 +336,19 @@ def run_esrgan(indir, outdir, model, tile):
         raise RuntimeError('realesrgan failed: ' + ' | '.join(tail))
 
 
+# Where each kind of dump belongs in the pack. Tiles and pages are both looked up as
+# textures; screen images are a separate lookup, because they never were textures.
+PACK_DIR = {'textures': 'textures', 'pages': 'textures', 'images': 'images'}
+
+
 def gather(dump, only):
     groups = []
-    if only in ('tiles', 'both'):
+    if only in ('tiles', 'both', 'all'):
         groups.append(('textures', os.path.join(dump, 'textures')))
-    if only in ('pages', 'both'):
+    if only in ('pages', 'both', 'all'):
         groups.append(('pages', os.path.join(dump, 'pages')))
+    if only in ('images', 'all'):
+        groups.append(('images', os.path.join(dump, 'images')))
     files = []
     for kind, d in groups:
         if not os.path.isdir(d):
@@ -358,7 +370,10 @@ def main():
     ap.add_argument('--model', default='realesrgan-x4plus-anime')
     ap.add_argument('--tile', type=int, default=32)
     ap.add_argument('--batch', type=int, default=2000)
-    ap.add_argument('--only', default='both', choices=('tiles', 'pages', 'both'))
+    ap.add_argument('--only', default='both', choices=('tiles', 'pages', 'images', 'both', 'all'),
+                    help="'both' is tiles and pages, as before; 'images' is the pictures "
+                         "the game decodes straight into video memory (a splash, a "
+                         "loading plate); 'all' is everything")
     ap.add_argument('--detail', type=float, default=4.0,
                     help='split radius in output pixels between the original\'s colour '
                          'and the network\'s detail (default 4); 0 writes the raw network')
@@ -378,18 +393,19 @@ def main():
     if not os.path.exists(ESRGAN):
         sys.exit(f'realesrgan-ncnn-vulkan not found at {os.path.abspath(ESRGAN)}')
 
-    tex_out = os.path.join(args.out, 'textures')
-    os.makedirs(tex_out, exist_ok=True)
+    out_of = {kind: os.path.join(args.out, sub) for kind, sub in PACK_DIR.items()}
+    for d in set(out_of.values()):
+        os.makedirs(d, exist_ok=True)
 
     files = gather(args.dump, args.only)
     if not args.force:
-        have = set(os.listdir(tex_out))
-        files = [f for f in files if f[2] not in have]
+        have = {d: set(os.listdir(d)) for d in set(out_of.values())}
+        files = [f for f in files if f[2] not in have[out_of[f[0]]]]
     recipe = describe(args)
     engine = f'waifu2x/{args.w2x_model} n{args.noise}' if args.engine == 'waifu2x' else args.model
     print(f'{len(files)} image(s) to upscale with {engine} at {SCALE}x, {recipe}')
     if not files:
-        write_manifest(args.out, engine, len(os.listdir(tex_out)), recipe)
+        write_manifest(args.out, engine, count_in(args.out, 'textures'), recipe)
         return
 
     work = os.path.join(args.out, '.work')
@@ -403,12 +419,14 @@ def main():
         os.makedirs(os.path.join(work, 'out'))
 
         alphas = {}
+        kind_of = {}
         # Two entries that differ only in palette transparency have identical colour,
         # and the network only ever sees colour. Upscaling one and reusing it for the
         # others is exact, not an approximation, and halves the work on a pack that
         # carries both palette forms of every texture.
         twins = {}
         for _kind, src, name in chunk:
+            kind_of[name] = _kind
             try:
                 a, digest = prepare(src, os.path.join(work, 'in', name), args.dedither)
             except Exception as e:
@@ -437,15 +455,16 @@ def main():
                     skipped += 1
                     continue
                 finish(up, os.path.join(work, 'in', source), alpha,
-                       os.path.join(tex_out, name), args.detail, args.strength)
+                       os.path.join(out_of[kind_of[name]], name), args.detail, args.strength)
                 done += 1
 
         rate = done / max(time.time() - started, 1e-3)
         print(f'  {done}/{len(files)} done, {skipped} skipped, {rate:.1f}/s')
 
     shutil.rmtree(work, ignore_errors=True)
-    write_manifest(args.out, engine, len(os.listdir(tex_out)), recipe)
-    print(f'pack written to {args.out}: {len(os.listdir(tex_out))} textures')
+    write_manifest(args.out, engine, count_in(args.out, 'textures'), recipe)
+    print(f'pack written to {args.out}: {count_in(args.out, "textures")} textures, '
+          f'{count_in(args.out, "images")} full-screen images')
 
 
 def describe(args):
@@ -458,7 +477,14 @@ def describe(args):
     return ', '.join(bits)
 
 
+def count_in(out, sub):
+    d = os.path.join(out, sub)
+    return len(os.listdir(d)) if os.path.isdir(d) else 0
+
+
 def write_manifest(out, model, count, recipe):
+    images = count_in(out, 'images')
+    also = f" {images} full-screen images." if images else ""
     manifest = {
         "formatVersion": 1,
         "id": "xmenma2-esrgan-4x",
@@ -466,7 +492,7 @@ def write_manifest(out, model, count, recipe):
         "version": "1.0",
         "description": f"Game textures upscaled 4x with Real-ESRGAN ({model}, {recipe}). "
                        f"Anything not present falls back to the original. "
-                       f"{count} textures.",
+                       f"{count} textures.{also}",
         "priority": 10,
         "game": {"id": "SLUS-01382", "strict": True},
     }
