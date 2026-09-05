@@ -1,7 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
+        <!--
+          A window application, not a console one. As Exe, Windows gives the process a
+          console: double-clicking the published build put a terminal on screen beside
+          the game, and closing that terminal killed the game.
+
+          Nothing is lost by dropping it. Diag tees Console.Out into
+          logs/xmenma2-timestamp.log and writes there whether or not a console exists,
+          so the diagnostic trail is unchanged, and output still reaches a pipe when the
+          build is launched from a shell with redirection, which is how the headless
+          capture harness runs it.
+        -->
+        <OutputType>WinExe</OutputType>
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
