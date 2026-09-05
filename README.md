@@ -7,12 +7,16 @@ RecompOne's runtime, so this is a native program rather than an emulator: the ga
 code runs directly, and the hardware it expects — GPU, SPU, CD drive, controllers — is
 provided by the runtime.
 
-It runs end to end at 60 fps in a 1280x960 window, rasterising internally at 4x, with an
-optional 4x texture pack built from the game's own art and optional widescreen output.
+It runs end to end at 60 fps, rasterising internally at 4x, with an optional 4x texture
+pack built from the game's own art and optional 16:9 output.
 
 ![Fight](docs/gameplay.png)
 
+*16:9, internal 4x, texture pack on.*
+
 ![Title](docs/title.png)
+
+*The front end has no 3D in it, so it stays 4:3 whatever the setting.*
 
 ## What this repository is
 
@@ -38,6 +42,10 @@ step is scripted.
 cards, the character-select and options screens, and all eighteen characters load. The
 published build is a single self-contained `XMenMA2.exe`.
 
+Since the first release: optional 16:9 that widens the view rather than stretching it,
+the splash and other full-screen art brought into the upscale pack, and **F12** for a
+screenshot of exactly what is on screen.
+
 **Unverified.** Nobody has confirmed the audio actually sounds right — the developer
 setup for this port has no audio output. Two-player input is wired but only port A has
 been driven. Endings, credits and practice mode have never been reached. Round timing
@@ -49,9 +57,13 @@ than tidy — including the things that were tried and did not work.
 ## Widescreen
 
 Off by default; **Settings > Display > Widescreen (16:9)** turns it on, and resizes the
-window to match.
+window to match, because a 16:9 frame left inside a 4:3 window gets boxed a second time
+and reads as a fault.
 
 ![Widescreen](docs/widescreen.png)
+
+*The same moment at both shapes, matched on height. The fighters and the HUD are the
+same size in each; 16:9 shows more of the arena rather than a bigger crop of it.*
 
 The game culls anything that projects outside its own screen, so widening the area the
 renderer draws into achieves nothing — the scenery is dropped before the GPU sees it.
@@ -115,6 +127,10 @@ python tools/verify_textures.py --dir assets/disc-textures/textures --out assets
 python tools/upscale_textures.py --dump assets --out packs/xmenma2-4x --only tiles
 ```
 
+Full-screen pictures are collected from a run rather than from the disc, since they are
+keyed by the pixels the game uploads: play with `XMENMA2_DUMP=images`, then
+`upscale_textures.py --only images` puts them in the same pack.
+
 Anything without a replacement falls back to the original, so a partial pack is always
 safe, and deleting a file from the pack simply restores that texture.
 
@@ -136,11 +152,14 @@ safe, and deleting a file from the pack simply restores that texture.
 
 Diagnostics live in `port/patches/`: `Diag.cs` (logging, watchdog, crash capture),
 `Capture.cs` (headless screenshots and scripted input), `TextureDump.cs`, and
-`Harness.cs` (RAM and scratchpad snapshots, pokes, watches).
+`Harness.cs` (RAM and scratchpad snapshots, pokes, watches, and a write probe that
+names the game code writing a range of memory).
 
 ## The splash screen
 
 ![Splash](docs/splash.png)
+
+*The same crop of a running frame at 1:1 output pixels, before and after.*
 
 Not a texture. It and 87 other full-screen images — the whole concept-art gallery — are
 512x480 8bpp pictures decoded straight into the framebuffer, so they never pass through
