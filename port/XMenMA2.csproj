@@ -18,6 +18,7 @@
         <Nullable>disable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <AssemblyName>XMenMA2</AssemblyName>
+        <Version>1.1.0</Version>
         <RootNamespace>XMenMA2</RootNamespace>
         <InvariantGlobalization>true</InvariantGlobalization>
         <ServerGarbageCollection>true</ServerGarbageCollection>

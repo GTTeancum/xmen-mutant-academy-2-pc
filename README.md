@@ -10,6 +10,15 @@ provided by the runtime.
 It runs end to end at 60 fps, rasterising internally at 4x, with an optional 4x texture
 pack built from the game's own art and optional 16:9 output.
 
+## Download v1.1
+
+[Download the Windows x64 release, including the 4x texture pack](https://github.com/GTTeancum/xmen-mutant-academy-2-pc/releases/tag/v1.1).
+Unzip into a writable folder and supply your own USA disc (SLUS-01382): CUE/BIN
+with all 13 tracks, or CHD passed as `XMenMA2.exe "D:\roms\game.chd"`.
+No disc image is included. See the bundled `README.txt` for installation and controls.
+
+v1.1 adds **16:9 widescreen support** and **one final texture replacement for the splash screen**.
+
 ![Fight](docs/gameplay.png)
 
 *16:9, internal 4x, texture pack on.*
@@ -23,7 +32,7 @@ pack built from the game's own art and optional 16:9 output.
 The port itself: the entry point, the patches, the build configuration, and the tooling
 written for it. It deliberately does **not** contain the game.
 
-Not committed, and not redistributable:
+Kept outside source control:
 
 | | why |
 |---|---|
@@ -33,8 +42,9 @@ Not committed, and not redistributable:
 | `port/packs/` | the upscaled pack built from those textures |
 | `tools/RecompOne/`, `tools/esrgan/` | third-party, vendored locally |
 
-You supply your own disc image, run the recompiler, and build the pack yourself. Every
-step is scripted.
+For the release download, supply your own disc image; the executable and pack are
+already built. To build from source, run the recompiler and build the pack using the
+scripts below.
 
 ## Status
 
@@ -60,10 +70,17 @@ Off by default; **Settings > Display > Widescreen (16:9)** turns it on, and resi
 window to match, because a 16:9 frame left inside a 4:3 window gets boxed a second time
 and reads as a fault.
 
-![Widescreen](docs/widescreen.png)
+![Cyclops vs. Rogue widescreen comparison](docs/widescreen-cyclops.png)
 
-*The same moment at both shapes, matched on height. The fighters and the HUD are the
-same size in each; 16:9 shows more of the arena rather than a bigger crop of it.*
+![Wolverine vs. Phoenix widescreen comparison](docs/widescreen-wolverine.png)
+
+*Actual v1.1 captures: Cyclops versus Rogue in the volcanic arena, and Wolverine
+versus Phoenix in the lunar arena. The cyan outline marks the centered 4:3 field
+of view inside each 16:9 capture; scenery outside it is the additional widescreen
+view. These are boundary overlays, not separately rendered 4:3 frames. The original
+captures are available [here](docs/gameplay.png) and [here](docs/gameplay-wolverine.png).*
+
+[Capture method and validation](docs/captures-v1.1.md).
 
 The game culls anything that projects outside its own screen, so widening the area the
 renderer draws into achieves nothing — the scenery is dropped before the GPU sees it.
@@ -73,7 +90,7 @@ and the frame is stretched back out at presentation. The stages are one and a ha
 three screens wide, so there is plenty there to show.
 
 Frames with no 3D in them — the movies, the front end, the VS card — are left at 4:3 and
-letterboxed, never stretched.
+pillarboxed, never stretched.
 
 The HUD is flat artwork at fixed screen positions, so it would come out a third wide.
 Nothing in the GPU stream separates it from the stage — same primitives, one ordering
@@ -159,7 +176,7 @@ names the game code writing a range of memory).
 
 ![Splash](docs/splash.png)
 
-*The same crop of a running frame at 1:1 output pixels, before and after.*
+*Actual v1.1 capture with the bundled splash replacement enabled.*
 
 Not a texture. It and 87 other full-screen images — the whole concept-art gallery — are
 512x480 8bpp pictures decoded straight into the framebuffer, so they never pass through
@@ -177,6 +194,6 @@ Only the splash is in the pack so far. The other 87 need visiting once with
 
 ## Legal
 
-This repository contains no game code and no game assets. *X-Men: Mutant Academy 2* is
+The source repository excludes the disc, generated game code, and texture pack. *X-Men: Mutant Academy 2* is
 © 2001 Activision and Marvel Characters, Inc. The screenshots are of the game running.
 You need your own copy of the disc for any of this to do anything.

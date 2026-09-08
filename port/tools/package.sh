@@ -32,28 +32,30 @@ mkdir -p "$STAGE/packs"
 cp -r "$PACK" "$STAGE/packs/"
 
 cat > "$STAGE/README.txt" <<'TXT'
-X-Men: Mutant Academy 2 -- PC port
+X-Men: Mutant Academy 2 -- PC port v1.1
 ==================================
 
 The game recompiled to run natively on Windows. It is not an emulator, and it does
 not need a PlayStation BIOS.
 
-You do need your own copy of the disc. Nothing in this download contains the game.
+You need your own USA disc (SLUS-01382). No disc image is bundled.
+The download includes the executable and optional 4x artwork pack.
 
 
 Installing
 ----------
-1. Unzip it anywhere. There is no installer, and nothing is written outside this
-   folder.
+1. Unzip into a writable folder, outside Program Files. There is no installer.
 
 2. Put your disc image in this folder, beside XMenMA2.exe. Either:
-     - a .cue file together with all of its .bin tracks, or
-     - a single .chd
+     - a .cue file together with all 13 .bin tracks, or
+     - a single .chd (pass its path as described below)
 
 3. Run XMenMA2.exe.
 
 It finds the .cue by itself and remembers where it is. If it cannot find one it
 will ask, with a Browse button. You can also drag a .cue onto the executable.
+For CHD, launch: XMenMA2.exe "D:\roms\X-Men - Mutant Academy 2.chd"
+The disc path is remembered. ISO files are not supported. Include all audio tracks.
 
 Requirements: 64-bit Windows, and a graphics driver with OpenGL 2.1 or newer.
 Nothing else to install.
@@ -86,6 +88,12 @@ Settings
 Widescreen widens the view rather than stretching it, so a fight shows more of the
 arena instead of a fatter picture. Menus and movies have no more picture to show
 and stay 4:3. Turning it on resizes the window to match.
+
+
+Changes in v1.1
+---------------
+- 16:9 widescreen support.
+- One final texture replacement for the splash screen.
 
 
 The packs folder
